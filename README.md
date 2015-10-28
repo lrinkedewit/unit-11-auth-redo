@@ -74,9 +74,9 @@ http://localhost:3000/signin
 ````
 
 ###Create a cookie
-- [ ] Create a cookie named 'codesmith' with the value of 'hi' that should be set with all requests
-- [ ] Create a cookie named 'secret' with a value that is a random number generated from 0-99 that should be sent with all requests
-- [ ] Create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
+- [ ] Inside of ```cookieController.setCookie```, create a cookie named 'codesmith' with the value of 'hi' that should be set with all requests
+- [ ] Inside of ```cookieController.setCookie```, create a cookie named 'secret' with a value that is a random number generated from 0-99 that should be sent with all requests
+- [ ] Inside of ```cookieController.setSSIDCookie```, create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
 
 ###Sessions
 - [ ] Create a session when a user creates an account. A session has the following properties:
@@ -88,7 +88,6 @@ The cookieId is equal the to the value of the cookie named ```ssid``` (which is 
 - [ ] Create a session when a user logins to an account
 
 ###Blocking certain pages
-- [ ] Modify the ```sessionController.startSession``` function. This function should create a new session when a user creates a new account or logins
 - [ ] Modify the ```sessionController.isLoggedIn``` middleware to verify if a user has a cookie with the name "ssid" and it has an active session. If they do, they should have be able to access the following page:
 ````
 http://localhost:3000/secret
