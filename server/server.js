@@ -13,16 +13,6 @@ mongoose.connect(mongoURI);
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded());
 
-// to remove
-// app.use(cookieParser());
-// app.use(session({
-//   genid: function() {
-//     return 'there';
-//   },
-//   name: 'wow',
-//   secret: 'keyboard cat'
-// }));
-
 app.post('/signup', userController.createUser);
 
 app.get('/', cookieController.setCookie, function(req, res) {
