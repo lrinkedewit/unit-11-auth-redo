@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var Cookies = require('cookies');
 var Session = require('./../server/session/sessionModel');
 var User = require('./../server/user/userModel');
+var bcrypt = require('bcryptjs');
 
 describe('Authentication', function() {
 
@@ -156,22 +157,60 @@ describe('Authentication', function() {
   //too write more tests
   describe('Blocking certain pages', function() {
     it('Block "/secret" if session not active', function(done) {
-
+     request(app)
+       .get('/secret')
+       .end(function(err, res) {
+        expect(res.text.match(/Secret/g)).to.be.null;
+        done();
+       });
+    });
+    it('Redirects from "/secret" to "/signup" if session not active', function(done) {
+     request(app)
+       .get('/secret')
+       .end(function(err, res) {
+        expect(res.text.match(/Signup/g)).to.be.truthy;
+        done();
+       });
     });
   });
 
+  describe('Bcrypt', function() {
+    it('Passwords should not be stored in plaintext', function(done) {
+      request(app)
+        .post('/signup')
+        .send({"username": "test3", "password" : "password3"})
+        .type('form')
+        .end(function(err, res) {
+          User.findOne({username: 'test3'}, function(err, user) {
+            expect(user.password).to.not.eql('password3');
+            done();
+          });
+        });
+    });
+
+    it('Passwords be bcrypted', function(done) {
+      request(app)
+        .post('/signup')
+        .send({"username": "test4", "password" : "password4"})
+        .type('form')
+        .end(function(err, res) {
+          User.findOne({username: 'test4'}, function(err, user) {
+            expect(bcrypt.compareSync('password4',user.password)).to.be.true;
+            done();
+          });
+        });
+    });
+
+  });
 
 });
 
 function getCookieValue(cookie) {
-  console.log(cookie);
   return cookie[0].split(';')[0].split('=')[1];
 }
 
 function getCookie(cookieArray, name) {
   return getCookieValue(cookieArray.filter(function(el) {
-    console.log(el.split(';')[0].split('=')[0]);
     return el.split(';')[0].split('=')[0] === name;
   }));
 }
-
