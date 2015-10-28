@@ -74,7 +74,7 @@ http://localhost:3000/
 }
 ````
 - [ ] If the POST request is successful, redirect to the ```/secret``` route
-- [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](http://www.embeddedjs.com/))
+- [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](http://ejs.co/))
 - [ ] Add a route that handles POST requests to ```/login```
 - [ ] Modify the ```userController.verifyUser``` middleware in the ```./server/user/userController.js``` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to ```/signin```
