@@ -1,7 +1,7 @@
 #Authorization
 
 ##Summary
-In this challenge you will be creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt.
+In this challenge you will be learning about how to authenticate users and authorize which data they get access to - a crucial part of every modern web application. You'll do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt.
 
 ###Learning Goals
 - [ ] Understand basics of cookies and sessions
