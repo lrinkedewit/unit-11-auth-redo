@@ -7,7 +7,7 @@
     "start-server": "sudo mongod --fork --logpath /dev/null",
     "start": "npm run start-server; ./node_modules/nodemon/bin/nodemon.js server/server.js",
     "stop-server": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
-    "test": "./node_modules/mocha/bin/mocha ./test"
+    "test": "export NODE_ENV=test && ./node_modules/mocha/bin/mocha ./test"
   },
   "repository": {
     "type": "git",

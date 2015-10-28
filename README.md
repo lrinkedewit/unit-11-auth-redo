@@ -7,6 +7,7 @@ In this challenge you will be working with
 - [ ] Understand basics of cookies and sessions
 - [ ] Understand the purpose of different encryption methods and how they work
 - [ ] Understand how headers play a role in authorization
+- [ ] Exposure to server side templating
 
 ##Cookies
 
@@ -33,8 +34,15 @@ http://localhost:3000/
 
 ###Creating users
 - [ ] Add route to handle POST requests to ```/users```
-- [ ] Modifiy the ```.createUser``` middleware in the ```./server/user/userController.js``` file to create a user when a user sends a POST request
+- [ ] Modify the ```.createUser``` middleware in the ```./server/user/userController.js``` file to create a user from the client's request
+````
+{
+  username: [String]
+  password: [String]
+}
+````
 - [ ] If the POST request is successful, redirect to the ```/secret``` route
+- [ ] If the POST request body is unsuccessful, display the error message
 - [ ] Add a route that handles POST requests to ```/login```
 - [ ] Modify the ```.verifyUser``` middleware in the ```./server/user/userController.js``` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to ```/signin```
@@ -47,8 +55,13 @@ http://localhost:3000/signup
 - [ ] Create a cookie named 'secret' with a value that is a random number generated from 0-99
 - [ ] Create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
 
+###Sessions
+- [ ] Create a session when a user creates an account
+- [ ] Create a session when a user logins to an account
+
 ###Blocking certain pages
-- [ ] Modify the ```authController``` middleware to verify if a user is valid and has an active session. If they do, they should have be able to access the following page:
+- [ ] Modify the ```sessionController.startSession``` function. This function should create a new session when a user creates a new account or logins
+- [ ] Modify the ```sessionController.isLoggedIn``` middleware to verify if a user has a cookie with the name "ssid" and it has an active session. If they do, they should have be able to access the following page:
 ````
 http://localhost:3000/secret
 ````
@@ -63,7 +76,7 @@ http://localhost:3000/signup
 - [ ] When a user signs in implement, implement a method to compare their inputted password to the hashed password in the database
 
 ###Extension
-- [ ] User passport.js
+- [ ] Use passport.js
 - [ ] Verify a user with JSON Web Tokens and local storage
 
 ###Resources and Links

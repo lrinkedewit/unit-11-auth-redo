@@ -6,14 +6,14 @@ var cookieParser = require('cookie-parser');
 var User = require('./user/userModel');
 var mongoose = require('mongoose');
 var userController = require('./user/userController');
-var isAuthenticated = require('./util/authController.js');
 var cookieController = require('./util/cookieController');
-
+var sessionController = require('./session/sessionController');
+var mongoURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost/test' : 'mongodb://localhost/myApp';
+mongoose.connect(mongoURI);
 app.set('view engine', 'ejs');
-mongoose.connect('mongodb://localhost')
+app.use(bodyParser.urlencoded());
 
 // to remove
-// app.use(bodyParser());
 // app.use(cookieParser());
 // app.use(session({
 //   genid: function() {
@@ -23,21 +23,21 @@ mongoose.connect('mongodb://localhost')
 //   secret: 'keyboard cat'
 // }));
 
-app.post('/users', userController.createUser);
+app.post('/signup', userController.createUser);
 
-app.get('/', generateCookies, function(req, res) {
+app.get('/', cookieController.setCookie, function(req, res) {
   res.render('./../client/index');
 });
 
-app.get('/signup', isAuthenticated, function(req, res) {
-  res.render('./../client/signup');
+app.get('/signup', function(req, res) {
+  res.render('./../client/signup', {error: null});
 });
 
-app.get('/secret', function(req, res) {
+app.post('/login', userController.verifyUser);
+
+app.get('/secret', sessionController.isLoggedIn, function(req, res) {
   userController.getAllUsers(function(users) {
-    res.render('./../client/secret', {
-      users: users
-    });
+    res.render('./../client/secret', { users: users });
   });
 });
 

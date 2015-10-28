@@ -1,7 +1,9 @@
-var Cookies = request('cookies');
+var Cookies = require('cookies');
+var sessionController = require('./../session/sessionController');
 
 var cookieController = {};
 cookieController.setCookie = setCookie;
+cookieController.setSSIDCookie = setSSIDCookie;
 
 function setCookie(req, res, next) {
   var cookies = new Cookies(req, res);
@@ -10,3 +12,9 @@ function setCookie(req, res, next) {
   next();
 }
 
+function setSSIDCookie(req, res, id) {
+  var cookies = new Cookies(req, res);
+  cookies.set('ssid', id);
+}
+
+module.exports = cookieController;
