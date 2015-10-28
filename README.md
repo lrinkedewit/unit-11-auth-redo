@@ -3,7 +3,7 @@
 ##Summary
 In this challenge you will be learning about how to authenticate users and authorize which data they get access to - a crucial part of every modern web application. 
 
-You will do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt.
+You will do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt. 
 
 ###Learning Goals
 - [ ] Understand basics of cookies and sessions
@@ -36,7 +36,9 @@ Bcrypt was developed to reduce the effectiveness of rainbow tables. Passwords ar
 
 ##EJS
 We also be working with EJS, a html templating library that creates web pages with variable content on the server end.
+
 ![](http://www.michaelgallego.fr/images/posts/2012-11-26-client-side-1.png)
+
 Unlike Single Page Applications (SPA) - where part of the pages is generated after the HTML file is rendered to the page via AJAX, the HTML (and DOM) is full constructed on the server end. There are many templating library out there:
 
  - Jade
