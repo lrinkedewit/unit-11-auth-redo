@@ -11,8 +11,10 @@ describe('Authentication', function() {
   var id;
   before(function(done) {
     User.remove({}, function() {
-      console.log("Test Database Cleared");
-      done();
+      Session.remove({}, function() {
+        console.log("Test Database Cleared");
+        done();
+      });
     });
   })
   describe('Creating users', function() {
