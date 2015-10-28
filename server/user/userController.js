@@ -8,7 +8,7 @@ userController.getAllUsers = getAllUsers;
 userController.verifyUser = verifyUser;
 
 function createUser(req, res) {
-  //write code here
+  // write code here
 
 }
 

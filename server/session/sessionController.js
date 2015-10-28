@@ -6,15 +6,14 @@ sessionController.isLoggedIn = isLoggedIn;
 sessionController.startSession = startSession;
 
 function isLoggedIn(req, res, next) {
-
   // write code here
- next();
 
+  next();
 }
 
 function startSession(cookieId, callback) {
-
   //write code here
+
 }
 
 module.exports = sessionController;
