@@ -28,11 +28,11 @@ A special key is used encrypt and encrypt the information. However, because the 
 
 ![](https://upload.wikimedia.org/wikipedia/commons/2/2b/Cryptographic_Hash_Function.svg)
 
-However, attackers utilize a list of the most common passwords, randomly encryptions them, and then compares it to values in the database. As soon as an attack figures out the cryptographic hash function, then the attacker can apply the same hash function to all passwords.
+However, attackers utilize a list of the most common passwords, randomly encrypts them, and then compares it to values in the database. As soon as an attack figures out the cryptographic hash function, then the attacker can apply the same hash function to all passwords.
 
 ![](http://3.bp.blogspot.com/-MZXxu6K5kmw/UpYnwO89WEI/AAAAAAAAAAU/gjQza5sXz48/s1600/password_hashing.png)
 
-Bcrypt was developed to reduce the effectiveness of rainbow tables. Passwords are encryption with a random string (known as a salt). The string that is encrypted is no longer a common password (since there a random string of characters following it), and therefore a brute force decrpytion.
+Bcrypt was developed to reduce the effectiveness of rainbow tables. Passwords are encrypted with a random string (known as a salt). The string that is encrypted is no longer a common password (since there a random string of characters following it). As long as the salt is known for a specific password, the original password can then be generated.
 
 ##EJS
 We also be working with EJS, a html templating library that creates web pages with variable content on the server end.
