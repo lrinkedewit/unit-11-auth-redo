@@ -6,15 +6,13 @@ cookieController.setCookie = setCookie;
 cookieController.setSSIDCookie = setSSIDCookie;
 
 function setCookie(req, res, next) {
-  var cookies = new Cookies(req, res);
-  cookies.set('codesmith', 'hi');
-  cookies.set('secret', Math.round(Math.random() * 99));
-  next();
+  //write code here
+
 }
 
 function setSSIDCookie(req, res, id) {
-  var cookies = new Cookies(req, res);
-  cookies.set('ssid', id);
+  // write code here
+
 }
 
 module.exports = cookieController;
