@@ -1,7 +1,9 @@
 #Authorization
 
 ##Summary
-In this challenge you will be learning about how to authenticate users and authorize which data they get access to - a crucial part of every modern web application. You'll do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt.
+In this challenge you will be learning about how to authenticate users and authorize which data they get access to - a crucial part of every modern web application. 
+
+You will do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt.
 
 ###Learning Goals
 - [ ] Understand basics of cookies and sessions
@@ -11,20 +13,25 @@ In this challenge you will be learning about how to authenticate users and autho
 
 ##Cookies
 ![](http://s.ravelrumba.com/uploads/2010/02/cookie-header-image1.png)
-A cookie a small amount of data that is stored in the browser. When a cookie is set in the browser, it is then sent with every requests to the server.
+
+A cookie a small amount of data that is stored in the browser. When a cookie is set in the browser, it is then sent with every requests to the server. That means the server can 'remember' the user's previous activity. Cookies allow websites to maintain state, that is, to persist information even as the page reloads. We'll use them here for maintaining a user's credentials
 
 ##Sessions
 Sessions are used to validate whether a user (with the proper cookies) should be logged into their account. A user receives a cookie when they successfully login to their account. Whenever the user visits the site again, the server verifies the user's cookie and then can redirect them a logged in status.
 
-
 ##Bcrypt
 It is not safe to assume that your data is impenetrable (by hackers, curious and/or disgruntled employees). Therefore it is essential not to store passwords (and other sensitive data) in plain text. If somebody gains access to your data, not only will they be able to login to your account for your site, but consumers also generally use the same password for many sites, and therefore the attacker will have access to those accounts as well. A standard way to ensure that information is not readily readable is by encrypting the data:
+
 ![](https://i-msdn.sec.s-msft.com/dynimg/IC168364.gif)
+
 A special key is used encrypt and encrypt the information. However, because the same key is used to encrypt and decrypt, an attacker who gains access to the key (or guesses it) will be able to decrypt all the passwords. Therefore, one-way encryption (cryptographic hash function) is used.
+
 ![](https://upload.wikimedia.org/wikipedia/commons/2/2b/Cryptographic_Hash_Function.svg)
+
 However, attackers utilize a list of the most common passwords, randomly encryptions them, and then compares it to values in the database. As soon as an attack figures out the cryptographic hash function, then the attacker can apply the same hash function to all passwords.
 
 ![](http://3.bp.blogspot.com/-MZXxu6K5kmw/UpYnwO89WEI/AAAAAAAAAAU/gjQza5sXz48/s1600/password_hashing.png)
+
 Bcrypt was developed to reduce the effectiveness of rainbow tables. Passwords are encryption with a random string (known as a salt). The string that is encrypted is no longer a common password (since there a random string of characters following it), and therefore a brute force decrpytion.
 
 ##EJS
