@@ -1,9 +1,9 @@
 #Authorization
 
 ##Summary
-In this challenge you will be learning about how to authenticate users and authorize which data they get access to - a crucial part of every modern web application. 
+In this challenge you will be learning about how to authenticate users and authorize which data they get access to - a crucial part of every modern web application.
 
-You will do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt. 
+You will do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt.
 
 ###Learning Goals
 - [ ] Understand basics of cookies and sessions
@@ -114,3 +114,7 @@ http://localhost:3000/signup
 ###Extension
 - [ ] Use [passport](http://passportjs.org/) to create a local session when a user signs up or logins in
 - [ ] Verify a user with [JSON Web Tokens](https://en.wikipedia.org/wiki/JWT) and local storage
+
+##Resources and links
+- [http://kestas.kuliukas.com/RainbowTables/](http://kestas.kuliukas.com/RainbowTables/)
+- [https://www.nczonline.net/blog/2009/05/05/http-cookies-explained/](https://www.nczonline.net/blog/2009/05/05/http-cookies-explained/)
