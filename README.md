@@ -65,7 +65,7 @@ http://localhost:3000/
 ````
 
 ###Creating users
-- [ ] Add route to handle POST requests to ```/users```
+- [ ] Add route to handle POST requests to ```/signup```
 - [ ] Modify the ```userController.createUser``` middleware in the ```./server/user/userController.js``` file to create a user from the client's request. Users require the following properties:
 ````
 {
