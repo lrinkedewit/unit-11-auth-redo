@@ -91,7 +91,6 @@ http://localhost:3000/signin
 - [ ] Create a session when a user creates an account. A session has the following properties:
 ````
 cookieId: [String]
-expires: [Date]
 ````
 The cookieId is equal the to the value of the cookie named ```ssid``` (which is equal to the user's id).
 - [ ] Create a session when a user logins to an account
