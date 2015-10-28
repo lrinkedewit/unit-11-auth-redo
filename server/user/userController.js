@@ -1,12 +1,24 @@
 var User = require('./userModel');
 
 var userController = {};
-
+userController.createUser = createUser;
 userController.getAllUsers = getAllUsers;
 
-function getAllUsers(req, res) {
+function createUser(req, res) {
+
+  // to remove
+  console.log(req.body);
+  User.create(req.body, function(err, user) {
+    console.log('wowowow');
+    console.log(err);
+    console.log(user);
+    if (!err) return res.redirect('/secret');
+  });
+}
+
+function getAllUsers(cb) {
   User.find({}, function(err, users) {
-    res.send(users);
+    if (!err) return cb(users);
   });
 }
 

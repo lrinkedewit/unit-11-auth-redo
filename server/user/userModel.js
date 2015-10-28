@@ -5,18 +5,24 @@ var SALT_WORK_FACTOR = 10;
 var bcrypt = require('bcryptjs');
 
 var userSchema = new Schema({
-  user: {type: String, required: true},
+  username: {type: String, required: true},
   password: {type: String, required: true}
 });
 
-userSchame.pre('save', function(next) {
-  var user = this;
+userSchema.methods.comparePassword = function(candidatePassword) {
+  return bcrypt.compareSync(candidatePassword, this.password);
+}
 
-  // put code here
-  var salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
-  user.password = bcrypt.hashSync(user.password, salt);
-  next();
+// userSchema.pre('save', function(next) {
+//   var user = this;
+//   console.log('saveing');
 
-});
+//   // put code here
+//   var salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
+//   user.password = bcrypt.hashSync(user.password, salt);
+//   console.log('next');
+//   return next();
 
-app.get('/users', userController.getAllUsers);
+// });
+
+module.exports = mongoose.model('User', userSchema);

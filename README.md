@@ -4,13 +4,11 @@
 In this challenge you will be working with
 
 ###Learning Goals
-- [ ] Understand express as a framework around Nodejs
-- [ ] Be able to create routes for an Express server
-- [ ] Have a deep understanding of how middleware works
+- [ ] Understand basics of cookies and sessions
+- [ ] Understand the purpose of different encryption methods and how they work
 - [ ] Understand how headers play a role in authorization
 
 ##Cookies
-Express is a framework built on top of the Nodejs platform that enables developers to easily create routes and APIs for their servers. It is one of the most popular frameworks to date (with over 20,000 stars on github), and is used in companies such as Netflix and MySpace. It is centered around middleware - small pieces of code that are built to perform a specific task on the client's request. Being a framework, express only adds structure to Nodejs applications - you can still use native Nodejs code in your express applications.
 
 ##Sessions
 
@@ -33,14 +31,36 @@ http://localhost:3000/
 http://localhost:3000/
 ````
 
-###Create a session
+###Creating users
+- [ ] Add route to handle POST requests to ```/users```
+- [ ] Modifiy the ```.createUser``` middleware in the ```./server/user/userController.js``` file to create a user when a user sends a POST request
+- [ ] If the POST request is successful, redirect to the ```/secret``` route
+- [ ] Add a route that handles POST requests to ```/login```
+- [ ] Modify the ```.verifyUser``` middleware in the ```./server/user/userController.js``` file to check if a user exists and the password is correct
+- [ ] If the username cannot be found or the password is incorrect, they should be redirected to ```/signin```
+````
+http://localhost:3000/signup
+````
+
+###Create a cookie
+- [ ] Create a cookie named 'codesmith' with the value of 'hi'
+- [ ] Create a cookie named 'secret' with a value that is a random number generated from 0-99
+- [ ] Create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
+
+###Blocking certain pages
+- [ ] Modify the ```authController``` middleware to verify if a user is valid and has an active session. If they do, they should have be able to access the following page:
+````
+http://localhost:3000/secret
+````
+- [ ] If they do not, they should be redirected to the signup page
+````
+http://localhost:3000/signup
+````
 
 ###Bcrypting passwords
-- [ ] Visit the following URL:
-````
-http://localhost:3000/
-````
-- [ ]
+- [ ] We are going to add a hook that will run before any passwords are saved that will bcrypt passwords before they are saved. Add the bcrypt hook to ```/server/user/userModel```
+- [ ] Have it so that when a new user is created their password is then bcrypted before being saved to the database
+- [ ] When a user signs in implement, implement a method to compare their inputted password to the hashed password in the database
 
 ###Extension
 - [ ] User passport.js
