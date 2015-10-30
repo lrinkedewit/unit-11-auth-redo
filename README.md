@@ -35,7 +35,7 @@ However, attackers utilize a list of the most common passwords, randomly encrypt
 Bcrypt was developed to reduce the effectiveness of rainbow tables. Passwords are encrypted with a random string (known as a salt). The string that is encrypted is no longer a common password (since there a random string of characters following it). As long as the salt is known for a specific password, the original password can then be generated.
 
 ##EJS
-We also be working with EJS, a html templating library that creates web pages with variable content on the server end.
+We also be working with [EJS](https://github.com/tj/ejs), a html templating library that creates web pages with variable content on the server end.
 
 ![](http://www.michaelgallego.fr/images/posts/2012-11-26-client-side-1.png)
 
@@ -74,7 +74,7 @@ http://localhost:3000/
 }
 ````
 - [ ] If the POST request is successful, redirect to the ```/secret``` route
-- [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](http://ejs.co/))
+- [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](https://github.com/tj/ejs))
 - [ ] Add a route that handles POST requests to ```/login```
 - [ ] Modify the ```userController.verifyUser``` middleware in the ```./server/user/userController.js``` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to ```/signin```
