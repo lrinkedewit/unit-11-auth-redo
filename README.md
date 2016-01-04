@@ -3,21 +3,21 @@
 ##Summary
 In this challenge you will be learning about how to authenticate users and authorize which data they get access to - a crucial part of every modern web application.
 
-You will do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your password with bcrypt.
+You will do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your stored passwords with bcrypt in order to keep your user information secure.
 
 ###Learning Goals
-- [ ] Understand basics of cookies and sessions
+- [ ] Understand the basics of cookies and sessions
 - [ ] Understand the purpose of different encryption methods and how they work
 - [ ] Understand how headers play a role in authorization
-- [ ] Exposure to server side templating
+- [ ] Gain exposure to server side templating
 
 ##Cookies
 ![](http://s.ravelrumba.com/uploads/2010/02/cookie-header-image1.png)
 
-A cookie a small amount of data that is stored in the browser. When a cookie is set in the browser, it is then sent with every requests to the server. That means the server can 'remember' the user's previous activity. Cookies allow websites to maintain state, that is, to persist information even as the page reloads. We'll use them here for maintaining a user's credentials
+A cookie is a small amount of data that is stored in the browser. When a cookie is set in the browser, it is then sent with every request to the server. That means the server can 'remember' the user's previous activity by inspecting the information stored in the cookie. Cookies allow websites to maintain state - that is, to persist information even as the page reloads. We'll use them here for maintaining a user's credentials.
 
 ##Sessions
-Sessions are used to validate whether a user (with the proper cookies) should be logged into their account. A user receives a cookie when they successfully login to their account. Whenever the user visits the site again, the server verifies the user's cookie and then can redirect them a logged in status.
+Sessions are used to validate whether a user (with the proper cookies) should be logged into their account. A user receives a cookie when they successfully login to their account. Whenever the user visits the site again, the server verifies the user's cookie, uses that information to determine if the user has a session, and then can redirect the request appropriately (either to a login page if they're not logged in or the requested resource if they are logged in).
 
 ##Bcrypt
 It is not safe to assume that your data is impenetrable (by hackers, curious and/or disgruntled employees). Therefore it is essential not to store passwords (and other sensitive data) in plain text. If somebody gains access to your data, not only will they be able to login to your account for your site, but consumers also generally use the same password for many sites, and therefore the attacker will have access to those accounts as well. A standard way to ensure that information is not readily readable is by encrypting the data:
@@ -35,11 +35,11 @@ However, attackers utilize a list of the most common passwords, randomly encrypt
 Bcrypt was developed to reduce the effectiveness of rainbow tables. Passwords are encrypted with a random string (known as a salt). The string that is encrypted is no longer a common password (since there a random string of characters following it). As long as the salt is known for a specific password, the original password can then be generated.
 
 ##EJS
-We also be working with [EJS](https://github.com/tj/ejs), a html templating library that creates web pages with variable content on the server end.
+We will also be working with [EJS](https://github.com/tj/ejs), an html templating library that creates web pages with variable content on the server end.
 
 ![](http://www.michaelgallego.fr/images/posts/2012-11-26-client-side-1.png)
 
-Unlike Single Page Applications (SPA) - where part of the pages is generated after the HTML file is rendered to the page via AJAX, the HTML (and DOM) is full constructed on the server end. There are many templating library out there:
+Unlike Single Page Applications (SPA) - where part of the pages is generated after the HTML file is rendered to the page via AJAX, the HTML (and DOM) is fully constructed on the server end. There are many templating libraries out there:
 
  - Jade
  - EJS
@@ -74,7 +74,7 @@ http://localhost:3000/
 }
 ````
 - [ ] If the POST request is successful, redirect to the ```/secret``` route
-- [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](https://github.com/tj/ejs))
+- [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](https://github.com/mde/ejs))
 - [ ] Add a route that handles POST requests to ```/login```
 - [ ] Modify the ```userController.verifyUser``` middleware in the ```./server/user/userController.js``` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to ```/signin```
