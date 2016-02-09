@@ -39,7 +39,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 * root
 */
 app.get('/', function(req, res) {
+  
+  /**
+  * Since we set `ejs` to be the view engine above, `res.render` will parse the
+  * template page we pass it (in this case 'client/secret.ejs') as ejs and produce
+  * a string of proper HTML which will be sent to the client!
+  */
   res.render('./../client/index');
+  
 });
 
 
