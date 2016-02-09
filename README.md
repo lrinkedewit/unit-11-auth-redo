@@ -29,15 +29,15 @@ Typically in encryption, a special key is used encrypt and decrypt the informati
 
 ![](https://upload.wikimedia.org/wikipedia/commons/2/2b/Cryptographic_Hash_Function.svg)
 
-Now if an attacker was to gain access to your database they would just have a list of one-way encrypted passwords. We've improved our security, but it's still not enough. Attackers often utilize a list of the most common passwords, hashes them with multiple hashing functions, and then compares it to values in the database. As soon as an attack figures out the cryptographic hash function, then the attacker can apply the same hash function to all passwords. This is known as a **dictionary attack**. The attacker my also perform a **brute force** attack, simply trying to hash every combination of passwords up to a given length and then comparing the resulting hash to a hash (or many hashes) in your database.
+Now if an attacker was to gain access to your database they would just have a list of one-way encrypted passwords. We've improved our security, but it's still not enough. Attackers often utilize a list of the most common passwords, hash them with multiple hashing functions, and then compare their resuls to values in the database. If the attacker finds a match, they now know your cryptographic hash function. At this point the attacker can apply the same hash function to their list of common passwords and look for matches in your database. This is known as a **dictionary attack**. The attacker my also perform a **brute force** attack, simply trying to hash every combination of passwords up to a given length and then comparing the resulting hash to a hash (or many hashes) in your database.
 
-A way to speed up password cracking is to precompute the hashes of many passwords and store them in a table. Then the attacker can quickly run through their table of precomputed hashes and compare them to those in your database. This is known as a **lookup table**. A **rainbow table** is a type of lookup table that has been optimized to store **more** known hashes in the same amount of space, making it more effective at finding passwords but slower to run.
-
-[How to hash + salt the right way](https://crackstation.net/hashing-security.htm)
+A way to speed up password cracking is to precompute the hashes of many passwords and store them in a table. Then the attacker can quickly run through their table of precomputed hashes and compare them to those in your database. This is known as a **lookup table**. A **rainbow table** is a type of lookup table that has been optimized to store **more** known hashes in the same amount of space, which results in it being more effective at finding passwords but slower to run.
 
 ![](http://3.bp.blogspot.com/-MZXxu6K5kmw/UpYnwO89WEI/AAAAAAAAAAU/gjQza5sXz48/s1600/password_hashing.png)
 
 Bcrypt was developed to reduce the effectiveness of rainbow tables. Before a user's password is encrypted a random string (known as a salt) is appended to the password. The string that is encrypted is no longer a common password since there is a random string of characters following it. In order for salting to be effective, a **random** salt must be used for every password - if the same salt was used for every password then a new lookup table could be created with the same salt appended to each password, making the salt pointless. Now when a user attempts to login, Bcrypt needs to know the specific salt that was used to encrypt their password so that it can hash the password + salt. Bcrypt achieves this by simply storing the salt in plain text along with the hashed password in the database. Storing the salt in plain text might seem like a security flaw, but remember that the point of a salt isn't to be secret, it's simply to make rainbow tables ineffective and reduce the effectiveness of brute force attacks somewhat.
+
+[How to hash + salt the right way](https://crackstation.net/hashing-security.htm)
 
 ### EJS
 We will also be working with [EJS](https://github.com/mde/ejs), an html templating library that creates web pages with variable content on the server end.
@@ -58,6 +58,7 @@ We will be working with EJS to generate static HTML pages.
 ### Setup
 - [ ] Run `npm install` to install server-side dependencies
 - [ ] Run `npm start` to start your server. Open your browser and head to `http://localhost:3000/`.
+ - **Note:** You'll need to type your login password for the computer in order to start the server since the `npm start` command also starts a local **Mongo** database. This also means you'll need to setup [MongoDB](https://docs.mongodb.org/manual/installation/) before running this on your own machine. The Mac Minis already have MongoDB installed.
 
 ### Testing
 - [ ] Run `npm test` in your terminal to test your code
