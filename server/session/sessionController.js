@@ -2,18 +2,31 @@ var Session = require('./sessionModel');
 var Cookies = require('cookies');
 
 var sessionController = {};
-sessionController.isLoggedIn = isLoggedIn;
-sessionController.startSession = startSession;
 
-function isLoggedIn(req, res, next) {
+/**
+* isLoggedIn - find the appropriate session for this request in the database, then
+* verify whether or not the session is still valid.
+*
+* @param req - http.IncomingRequest
+* @param rs - http.ServerResponse
+* @param next - Callback with signature ([err])
+*/
+sessionController.isLoggedIn = function(req, res, next) {
   // write code here
 
   next();
-}
+};
 
-function startSession(cookieId, callback) {
+/**
+* startSession - create a new Session model and then save the new session to the
+* database.
+*
+* @param cookieId - id to use as the id of the new session
+* @param callback - Callback with signature (Session)
+*/
+sessionController.startSession = function(cookieId, callback) {
   //write code here
 
-}
+};
 
 module.exports = sessionController;

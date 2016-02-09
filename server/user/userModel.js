@@ -1,5 +1,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
+/**
+* Hint: Why is bcrypt required here?
+*/
 var SALT_WORK_FACTOR = 10;
 var bcrypt = require('bcryptjs');
 
