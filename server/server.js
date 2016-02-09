@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
-const User = require('./user/userModel');
 const userController = require('./user/userController');
 const cookieController = require('./util/cookieController');
 const sessionController = require('./session/sessionController');
