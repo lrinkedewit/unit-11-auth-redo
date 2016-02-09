@@ -1,41 +1,46 @@
 # Authorization
 
 ## Summary
-In this challenge you will be learning about how to authenticate users and authorize which data they get access to - a crucial part of every modern web application.
+In this challenge you will be learning about how to authenticate users and authorize which areas of your site they get access to - a crucial part of every modern web application.
 
-You will do that by creating cookies to send to browser and creating sessions to verify the cookies. After that you will be encrypting your stored passwords with bcrypt in order to keep your user information secure.
+You will do that by creating cookies to send to the browser and sessions to verify the cookies. After that you will be encrypting your stored passwords with bcrypt in order to keep your user information secure.
 
 ### Learning Goals
 - [ ] Understand the basics of cookies and sessions
 - [ ] Understand the purpose of different encryption methods and how they work
 - [ ] Understand how headers play a role in authorization
 - [ ] Gain exposure to server side templating
+- [ ] Understand the pros and cons of different session storage methods
 
-## Cookies
+### Cookies
 ![](http://s.ravelrumba.com/uploads/2010/02/cookie-header-image1.png)
 
-A cookie is a small amount of data that is stored in the browser. When a cookie is set in the browser, it is then sent with every request to the server. That means the server can 'remember' the user's previous activity by inspecting the information stored in the cookie. Cookies allow websites to maintain state - that is, to persist information even as the page reloads. We'll use them here for maintaining a user's credentials.
+A cookie is a small amount of data that is stored in the browser. When a cookie is set in the browser, it is then automatically sent by the browser with every request to the server. That means the server can 'remember' the user's previous activity by inspecting the information stored in the cookie. Cookies allow websites to maintain state - that is, to persist information even as the page reloads. We'll use them here for maintaining a user's credentials.
 
-## Sessions
-Sessions are used to validate whether a user (with the proper cookies) should be logged into their account. A user receives a cookie when they successfully login to their account. Whenever the user visits the site again, the server verifies the user's cookie, uses that information to determine if the user has a session, and then can redirect the request appropriately (either to a login page if they're not logged in or the requested resource if they are logged in).
+### Sessions
+Sessions are used to validate whether a user (with the proper cookies) should be logged into their account. A user receives a cookie when they successfully login to their account. Whenever the user visits the site again, the server verifies the user's cookie, uses that information to determine if the user has a session, and then can redirect the request appropriately (either to a login page if they're not logged in or to the requested resource if they are logged in).
 
-## Bcrypt
+### Bcrypt
 It is not safe to assume that your data is impenetrable (by hackers, curious and/or disgruntled employees). Therefore it is essential not to store passwords (and other sensitive data) in plain text. If somebody gains access to your data, not only will they be able to login to your account for your site, but consumers also generally use the same password for many sites, and therefore the attacker will have access to those accounts as well. A standard way to ensure that information is not readily readable is by encrypting the data:
 
 ![](https://i-msdn.sec.s-msft.com/dynimg/IC168364.gif)
 
-A special key is used encrypt and encrypt the information. However, because the same key is used to encrypt and decrypt, an attacker who gains access to the key (or guesses it) will be able to decrypt all the passwords. Therefore, one-way encryption (cryptographic hash function) is used.
+Typically in encryption, a special key is used encrypt and decrypt the information. However, because the same key is used to encrypt and decrypt, an attacker who gains access to the key (or guesses it) will be able to decrypt all the passwords. Therefore when we store sensitive information on the server, a one-way encryption (cryptographic hash function) is used. This means that we can verify if a user's entered password is correct by passing it through our one-way encryption function and comparing it to the encrypted version on the server. Additionally, there is no way for us to obtain the user's real password from the encrypted version on the server.
 
 ![](https://upload.wikimedia.org/wikipedia/commons/2/2b/Cryptographic_Hash_Function.svg)
 
-However, attackers utilize a list of the most common passwords, randomly encrypts them, and then compares it to values in the database. As soon as an attack figures out the cryptographic hash function, then the attacker can apply the same hash function to all passwords.
+Now if an attacker was to gain access to your database they would just have a list of one-way encrypted passwords. We've improved our security, but it's still not enough. Attackers often utilize a list of the most common passwords, hashes them with multiple hashing functions, and then compares it to values in the database. As soon as an attack figures out the cryptographic hash function, then the attacker can apply the same hash function to all passwords. This is known as a **dictionary attack**. The attacker my also perform a **brute force** attack, simply trying to hash every combination of passwords up to a given length and then comparing the resulting hash to a hash (or many hashes) in your database.
+
+A way to speed up password cracking is to precompute the hashes of many passwords and store them in a table. Then the attacker can quickly run through their table of precomputed hashes and compare them to those in your database. This is known as a **lookup table**. A **rainbow table** is a type of lookup table that has been optimized to store **more** known hashes in the same amount of space, making it more effective at finding passwords but slower to run.
+
+[How to hash + salt the right way](https://crackstation.net/hashing-security.htm)
 
 ![](http://3.bp.blogspot.com/-MZXxu6K5kmw/UpYnwO89WEI/AAAAAAAAAAU/gjQza5sXz48/s1600/password_hashing.png)
 
-Bcrypt was developed to reduce the effectiveness of rainbow tables. Passwords are encrypted with a random string (known as a salt). The string that is encrypted is no longer a common password (since there a random string of characters following it). As long as the salt is known for a specific password, the original password can then be generated.
+Bcrypt was developed to reduce the effectiveness of rainbow tables. Before a user's password is encrypted a random string (known as a salt) is appended to the password. The string that is encrypted is no longer a common password since there is a random string of characters following it. In order for salting to be effective, a **random** salt must be used for every password - if the same salt was used for every password then a new lookup table could be created with the same salt appended to each password, making the salt pointless. Now when a user attempts to login, Bcrypt needs to know the specific salt that was used to encrypt their password so that it can hash the password + salt. Bcrypt achieves this by simply storing the salt in plain text along with the hashed password in the database. Storing the salt in plain text might seem like a security flaw, but remember that the point of a salt isn't to be secret, it's simply to make rainbow tables ineffective and reduce the effectiveness of brute force attacks somewhat.
 
-## EJS
-We will also be working with [EJS](https://github.com/tj/ejs), an html templating library that creates web pages with variable content on the server end.
+### EJS
+We will also be working with [EJS](https://github.com/mde/ejs), an html templating library that creates web pages with variable content on the server end.
 
 ![](http://www.michaelgallego.fr/images/posts/2012-11-26-client-side-1.png)
 
@@ -52,17 +57,13 @@ We will be working with EJS to generate static HTML pages.
 
 ### Setup
 - [ ] Run `npm install` to install server-side dependencies
-- [ ] Run `npm start` to start your server. Open your browser to the following address:
-```
-http://localhost:3000/
-```
+- [ ] Run `npm start` to start your server. Open your browser and head to `http://localhost:3000/`.
 
 ### Testing
 - [ ] Run `npm test` in your terminal to test your code
-- [ ] Additionally, open your browser to the following address to view your application:
-```
-http://localhost:3000/
-```
+- [ ] Additionally, you should be constantly testing out your code in the browser to assess its functionality.
+
+##Challenges
 
 ### Creating users
 - [ ] Add route to handle POST requests to `/signup`
@@ -117,3 +118,4 @@ We are going to add a hook that will run before any passwords are saved that wil
 ## Resources and links
 - [http://kestas.kuliukas.com/RainbowTables/](http://kestas.kuliukas.com/RainbowTables/)
 - [https://www.nczonline.net/blog/2009/05/05/http-cookies-explained/](https://www.nczonline.net/blog/2009/05/05/http-cookies-explained/)
+- [Hash and salt passwords properly](https://crackstation.net/hashing-security.htm)

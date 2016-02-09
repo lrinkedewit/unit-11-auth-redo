@@ -1,21 +1,38 @@
-var express = require('express');
-var app = express();
-var path = require('path');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var User = require('./user/userModel');
-var mongoose = require('mongoose');
-var userController = require('./user/userController');
-var cookieController = require('./util/cookieController');
-var sessionController = require('./session/sessionController');
-var mongoURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost/test' : 'mongodb://localhost/myApp';
-mongoose.connect(mongoURI);
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded());
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 
+const User = require('./user/userModel');
+const userController = require('./user/userController');
+const cookieController = require('./util/cookieController');
+const sessionController = require('./session/sessionController');
+
+var app = express();
+
+const mongoURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost/unit11test' : 'mongodb://localhost/unit11dev';
+mongoose.connect(mongoURI);
+
+/**
+* Set our Express view engine as ejs.
+* This means whenever we call res.render, ejs will be used to compile the template.
+* ejs templates are located in the client/ directory
+*/
+app.set('view engine', 'ejs');
+
+/**
+* Automatically parse urlencoded body content from incoming requests and place it
+* in req.body
+*/
+app.use(bodyParser.urlencoded({ extended: true }));
+
+/**
+* Routes
+*/
 app.post('/signup', userController.createUser);
 
-app.get('/', cookieController.setCookie, function(req, res) {
+app.get('/', function(req, res) {
   res.render('./../client/index');
 });
 
