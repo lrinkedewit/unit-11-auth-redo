@@ -3,23 +3,37 @@ var cookieController = require('./../util/cookieController');
 var sessionController = require('./../session/sessionController');
 
 var userController = {};
-userController.createUser = createUser;
-userController.getAllUsers = getAllUsers;
-userController.verifyUser = verifyUser;
 
-function createUser(req, res) {
+/**
+* getAllUsers
+*
+* @param next - Callback Function w signature (err, users)
+*/
+userController.getAllUsers = function(next) {
+  User.find({}, next);
+};
+
+/**
+* createUser - create a new User model and then save the user to the database.
+*
+* @param req - http.IncomingRequest
+* @param rs - http.ServerResponse
+*/
+userController.createUser = function(req, res) {
   // write code here
+  
+};
 
-}
-
-function verifyUser(req, res) {
+/**
+* verifyUser - Obtain username and password from the request body, locate
+* the appropriate user in the database, and then authenticate the submitted password
+* against the password stored in the database.
+*
+* @param req - http.IncomingRequest
+* @param rs - http.ServerResponse
+*/
+userController.verifyUser = function(req, res) {
   // write code here
-}
-
-function getAllUsers(cb) {
-  User.find({}, function(err, users) {
-    if (!err) return cb(users);
-  });
-}
+};
 
 module.exports = userController;
