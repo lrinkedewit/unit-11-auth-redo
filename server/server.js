@@ -30,18 +30,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**
 * Routes
 */
-app.post('/signup', userController.createUser);
 
 app.get('/', function(req, res) {
   res.render('./../client/index');
 });
 
+
 app.get('/signup', function(req, res) {
   res.render('./../client/signup', {error: null});
 });
 
+app.post('/signup', userController.createUser);
+
+
 app.post('/login', userController.verifyUser);
 
+/**
+* Authorization required for these routes
+*/
 app.get('/secret', sessionController.isLoggedIn, function(req, res) {
   userController.getAllUsers(function(users) {
     res.render('./../client/secret', { users: users });
