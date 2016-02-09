@@ -63,7 +63,9 @@ app.post('/login', userController.verifyUser);
 * Authorized routes
 */
 app.get('/secret', sessionController.isLoggedIn, function(req, res) {
-  userController.getAllUsers(function(users) {
+  userController.getAllUsers(function(err, users) {
+    if (err) throw err;
+    
     res.render('./../client/secret', { users: users });
   });
 });
