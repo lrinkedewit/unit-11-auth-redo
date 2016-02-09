@@ -79,10 +79,7 @@ We will be working with EJS to generate static HTML pages.
 - [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](https://github.com/mde/ejs))
 - [ ] Add a route that handles POST requests to `/login`
 - [ ] Modify the `userController.verifyUser` middleware in the `./server/user/userController.js` file to check if a user exists and the password is correct
-- [ ] If the username cannot be found or the password is incorrect, they should be redirected to `/signin`
-```
-http://localhost:3000/signin
-```
+- [ ] If the username cannot be found or the password is incorrect, they should be redirected to `/signup`
 
 ### Create a cookie
 - [ ] Inside of `cookieController.setCookie`, create a cookie named 'codesmith' with the value of 'hi' that should be sent to the server with all requests
