@@ -33,11 +33,11 @@ Now if an attacker was to gain access to your database they would just have a li
 
 A way to speed up password cracking is to precompute the hashes of many passwords and store them in a table. Then the attacker can quickly run through their table of precomputed hashes and compare them to those in your database. This is known as a **lookup table**. A **rainbow table** is a type of lookup table that has been optimized to store **more** known hashes in the same amount of space, which results in it being more effective at finding passwords but slower to run.
 
-[How to hash + salt the right way](https://crackstation.net/hashing-security.htm)
-
 ![](http://3.bp.blogspot.com/-MZXxu6K5kmw/UpYnwO89WEI/AAAAAAAAAAU/gjQza5sXz48/s1600/password_hashing.png)
 
 Bcrypt was developed to reduce the effectiveness of rainbow tables. Before a user's password is encrypted a random string (known as a salt) is appended to the password. The string that is encrypted is no longer a common password since there is a random string of characters following it. In order for salting to be effective, a **random** salt must be used for every password - if the same salt was used for every password then a new lookup table could be created with the same salt appended to each password, making the salt pointless. Now when a user attempts to login, Bcrypt needs to know the specific salt that was used to encrypt their password so that it can hash the password + salt. Bcrypt achieves this by simply storing the salt in plain text along with the hashed password in the database. Storing the salt in plain text might seem like a security flaw, but remember that the point of a salt isn't to be secret, it's simply to make rainbow tables ineffective and reduce the effectiveness of brute force attacks somewhat.
+
+[How to hash + salt the right way](https://crackstation.net/hashing-security.htm)
 
 ### EJS
 We will also be working with [EJS](https://github.com/mde/ejs), an html templating library that creates web pages with variable content on the server end.
