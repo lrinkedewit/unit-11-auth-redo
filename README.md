@@ -58,6 +58,7 @@ We will be working with EJS to generate static HTML pages.
 ### Setup
 - [ ] Run `npm install` to install server-side dependencies
 - [ ] Run `npm start` to start your server. Open your browser and head to `http://localhost:3000/`.
+ - **Note:** You'll need to type your login password for the computer in order to start the server since the `npm start` command also starts a local **Mongo** database. This also means you'll need to setup [MongoDB](https://docs.mongodb.org/manual/installation/) before running this on your own machine. The Mac Minis already have MongoDB installed.
 
 ### Testing
 - [ ] Run `npm test` in your terminal to test your code
