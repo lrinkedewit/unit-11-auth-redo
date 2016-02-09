@@ -26,15 +26,26 @@ app.set('view engine', 'ejs');
 */
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 /**
-* Routes
+* --- Express Routes ---
+* Express will attempt to match these routes in the order they are declared here.
+* If a route handler / middleware handles a request and sends a response without
+* calling `next()`, then none of the route handlers after that route will run!
+* This can be very useful for adding authorization to certain routes...
 */
 
+/**
+* root
+*/
 app.get('/', function(req, res) {
   res.render('./../client/index');
 });
 
 
+/**
+* signup
+*/
 app.get('/signup', function(req, res) {
   res.render('./../client/signup', {error: null});
 });
@@ -42,10 +53,14 @@ app.get('/signup', function(req, res) {
 app.post('/signup', userController.createUser);
 
 
+/**
+* login
+*/
 app.post('/login', userController.verifyUser);
 
+
 /**
-* Authorization required for these routes
+* Authorized routes
 */
 app.get('/secret', sessionController.isLoggedIn, function(req, res) {
   userController.getAllUsers(function(users) {
