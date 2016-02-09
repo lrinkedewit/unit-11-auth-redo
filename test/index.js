@@ -168,7 +168,7 @@ describe('Authentication', function() {
      request(app)
        .get('/secret')
        .end(function(err, res) {
-        expect(res.text.match(/Signup/g)).to.be.truthy;
+        expect(res.text.to.include('Signup'));
         done();
        });
     });
