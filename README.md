@@ -67,7 +67,7 @@ We will be working with EJS to generate static HTML pages.
 ##Challenges
 
 ### Creating users
-- [ ] Add route to handle POST requests to `/signup`
+- [x] Add route to handle POST requests to `/signup`
 - [ ] Modify the `userController.createUser` middleware in the `./server/user/userController.js` file to create a user from the client's request. Users require the following properties:
 ```
 {
@@ -77,7 +77,7 @@ We will be working with EJS to generate static HTML pages.
 ```
 - [ ] If the POST request is successful, redirect to the `/secret` route
 - [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](https://github.com/mde/ejs))
-- [ ] Add a route that handles POST requests to `/login`
+- [x] Add a route that handles POST requests to `/login`
 - [ ] Modify the `userController.verifyUser` middleware in the `./server/user/userController.js` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to `/signin`
 ```
