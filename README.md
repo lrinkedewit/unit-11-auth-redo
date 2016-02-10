@@ -120,16 +120,25 @@ We are going to add a hook that will run before any passwords are saved that wil
 - [ ] When a user signs in, implement a method to compare their inputted password to the hashed password in the database
 
 ### Extension
+**Note** There are no tests in place for these challenges at this time.
 - [ ] Use [passport](http://passportjs.org/) to create a local session when a user signs up or logs in
   - [ ] Commit your work and make a new branch before implementing Passport, since it will require heavy modification to your route middleware.
   - [ ] Be sure to understand how a passport local session works. "local session" here means that the session will be stored in memory, no longer kept in our Mongo database. Why might this type of session store be advantagous? What are we giving up by doing this?
 - [ ] Setup [Redis](http://redis.io/) as your session store
+  - [ ] Since this will require heavy refactoring, you'll likely want to make a new branch before implementing this section
   - [ ] Install Redis locally following their [quickstart](http://redis.io/topics/quickstart) guide
   - [ ] Take some time to glean some information from the following articles. Try to understand the use cases for Redis and why session store might be a good use for it. What are the trade-offs of using Redis vs Mongo for a session store?
     - [ ] [How to take advantage of Redis](http://oldblog.antirez.com/post/take-advantage-of-redis-adding-it-to-your-stack.html)
     - [ ] [Redis tutorial + use cases](https://web.archive.org/web/20120118030804/http://simonwillison.net/static/2010/redis-tutorial/)
   - [ ] Start your redis server with the `redis-server` command in a separate command-line window
   - [ ] You'll want to use the [node_redis](https://github.com/NodeRedis/node_redis) library for interacting with Redis
+- [ ] Use a JSON Web Token stored inside our `ssid` cookie as your session store
+  - [ ] Again, you'll probably want to make a new branch off of your master before starting this section.
+  - [ ] A [JWT](https://jwt.io/), or JSON Web Token, is a standard for storing signed, verifiable information that cannot be modified by the client
+  - [ ] An advantage of using a JWT for our session store is that our server has everything it needs to know about the session right inside the JWT - it doesn't need to perform further lookup in a database. What downsides do you think there are to this method of session store?
+  - [ ] Be sure to keep your JWT secure by following [best practices](https://stormpath.com/blog/jwt-the-right-way/)
+  - [ ] To create your JWT, you'll want to use an npm module such as [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+- [ ] Enable CSRF security for our forms so that our users sessions can't be hijacked by Cross-Site Request Forgery attacks
   
 
 ## Resources and links
