@@ -1,5 +1,4 @@
 var Session = require('./sessionModel');
-var Cookies = require('cookies');
 
 var sessionController = {};
 
