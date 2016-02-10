@@ -1,7 +1,6 @@
 var request = require('supertest');
 var app = require('./../server/server');
 var expect = require('chai').expect;
-var Cookies = require('cookies');
 var Session = require('./../server/session/sessionModel');
 var User = require('./../server/user/userModel');
 var bcrypt = require('bcryptjs');
