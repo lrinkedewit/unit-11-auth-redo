@@ -24,8 +24,8 @@ describe('Unit 11 Tests', function() {
         User.create({
           username: 'david',
           password: 'aight'
-        }, function(){
-          
+        }, function(err, user){
+          id = user.id;
           done();
         });
         
@@ -48,10 +48,6 @@ describe('Unit 11 Tests', function() {
         .type('form')
         .end(function(err, res) {
           User.findOne({username: 'test1'}, function(err, user) {
-
-            // for use when setting ssid cookie
-            id = user._id;
-
             expect(err).to.be.null;
             expect(user).to.be.truthy;
             done();
@@ -175,7 +171,7 @@ describe('Unit 11 Tests', function() {
       request(app)
         .post('/login')
         .type('form')
-        .send({"username": "test1", "password" : "password1"})
+        .send({ username: 'david', password : 'aight' })
         .expect('set-cookie', regex, done);
     });
     
