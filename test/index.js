@@ -235,29 +235,6 @@ describe('Unit 11 Tests', function() {
         });
     });
     
-    it('Session expires after 30 seconds', function(done) {
-      request(app)
-        .post('/login')
-        .type('form')
-        .send({ username: 'david', password: 'aight' })
-        .end(function(err, res) {
-          User.findOne({ username: 'david' }, function(err, user) {
-            Session.findOne({ cookieId: user._id }, function(err, session) {
-              expect(err).to.be.null;
-              expect(session).to.exist;
-              
-              clock.tick(30000);
-              
-              Session.findOne({ cookieId: user._id }, function(err, session) {
-                expect(err).to.be.null;
-                expect(session).to.not.exist;
-                done();
-              });
-            });
-          });
-        });
-    });
-    
   });
 
   describe('Authorizing users', function() {
@@ -276,7 +253,7 @@ describe('Unit 11 Tests', function() {
      request(app)
        .get('/secret')
        .end(function(err, res) {
-        expect(res.text.to.include('Signup'));
+        expect(res.text).to.contain('Signup');
         expect(res.headers.location).to.eql('/signup');
         done();
        });
@@ -298,6 +275,26 @@ describe('Unit 11 Tests', function() {
               expect(res.text).to.contain('david');
               done();
             });
+        });
+    });
+    
+    it('Should not be able to access "/secret" after session expires', function(done) {
+      request(app)
+        .post('/login')
+        .type('form')
+        .send({ username: 'david', password: 'aight' })
+        .end(function(err, res) {
+          Session.remove({ cookieId: id }, function(err, session) {
+            
+            request(app)
+              .get('/secret')
+              .end(function(err, res) {
+                expect(res.text).to.contain('Signup');
+                expect(res.headers.location).to.eql('/signup');
+                done();
+              });
+              
+          });
         });
     });
     
