@@ -166,6 +166,14 @@ describe('Unit 11 Tests', function() {
         .expect('set-cookie', /ssid=/, done);
     });
     
+    it('"ssid" cookie is HttpOnly', function(done) {
+      request(app)
+        .post('/login')
+        .type('form')
+        .send({ username: 'david', password: 'aight' })
+        .expect('set-cookie', /HttpOnly/, done);
+    });
+    
     it('Header has a cookie named "ssid" when a user successfully signs up', function(done) {
       request(app)
         .post('/signup')
