@@ -11,7 +11,7 @@ describe('Authentication', function() {
   // for use when setting ssid cokie
   var id;
   
-  before(function(done) {
+  beforeEach(function(done) {
     User.remove({}, function() {
       Session.remove({}, function() {
         
@@ -56,12 +56,25 @@ describe('Authentication', function() {
           done();
         });
     });
+    
+    it('POST request to "/signup" route with incorrectly formatted body does not create a new User', function(done) {
+      request(app)
+        .post('/signup')
+        .send({ username: 'test2' })
+        .type('form')
+        .end(function(err, res) {
+          User.findOne({ username: 'test2' }, function(err, user) {
+            expect(user).to.not.exist;
+            done();
+          });
+        });
+    });
 
     it('POST request to "/login" route with correctly formated correct information redirects to "/secret"', function(done) {
       request(app)
         .post('/login')
         .type('form')
-        .send({ username: 'test1', password: 'password1' })
+        .send({ username: 'david', password: 'aight' })
         .end(function(err, res) {
           expect(res.headers.location).to.eql('/secret');
           done();
@@ -135,7 +148,7 @@ describe('Authentication', function() {
       request(app)
         .post('/login')
         .type('form')
-        .send({"username": "test1", "password" : "password1"})
+        .send({ username: 'david', password: 'aight' })
         .expect('set-cookie', /ssid=/, done);
     });
 
@@ -150,37 +163,55 @@ describe('Authentication', function() {
   });
 
   describe('Sessions', function() {
-    it('Create a session when a user creates an account', function(done) {
+    
+    it('Creates a session when a user successfully creates an account', function(done) {
       request(app)
         .post('/signup')
         .type('form')
         .send({username: 'test2', password: 'password2'})
         .end(function(err, res) {
-          User.findOne({username: 'test2'}, function(err, user) {
+          User.findOne({ username: 'test2' }, function(err, user) {
             Session.findOne({cookieId: user._id}, function(err, session) {
               expect(err).to.be.null;
-              expect(session).to.be.truthy;
+              expect(session).to.exist;
               done();
             });
           });
         });
     });
 
-    it('Create a session when a user logins to an account', function(done) {
+    it('Creates a session when a user successfully logins to an account', function(done) {
       request(app)
         .post('/login')
         .type('form')
-        .send({username: 'test2', password: 'password2'})
+        .send({username: 'david', password: 'aight'})
         .end(function(err, res) {
-          User.findOne({username: 'test2'}, function(err, user) {
+          User.findOne({username: 'david'}, function(err, user) {
             Session.findOne({cookieId: user._id}, function(err, session) {
               expect(err).to.be.null;
-              expect(session).to.be.truthy;
+              expect(session).to.exist;
               done();
             });
           });
         });
     });
+    
+    it('Does not create a session if login unsuccessful', function(done) {
+      request(app)
+        .post('/login')
+        .type('form')
+        .send({username: 'david', password: 'wrong password'})
+        .end(function(err, res) {
+          User.findOne({username: 'david'}, function(err, user) {
+            Session.findOne({cookieId: user._id}, function(err, session) {
+              expect(err).to.be.null;
+              expect(session).to.not.exist;
+              done();
+            });
+          });
+        });
+    });
+    
   });
 
   //too write more tests
@@ -193,6 +224,7 @@ describe('Authentication', function() {
         done();
        });
     });
+    
     it('Redirects from "/secret" to "/signup" if session not active', function(done) {
      request(app)
        .get('/secret')
