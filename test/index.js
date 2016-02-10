@@ -252,8 +252,8 @@ describe('Unit 11 Tests', function() {
     it('Redirects from "/secret" to "/signup" if session not active', function(done) {
      request(app)
        .get('/secret')
+       .expect(302)
        .end(function(err, res) {
-        expect(res.text).to.contain('Signup');
         expect(res.headers.location).to.eql('/signup');
         done();
        });
@@ -265,15 +265,18 @@ describe('Unit 11 Tests', function() {
         .type('form')
         .send({ username: 'david', password: 'aight' })
         .end(function(err, res) {
+          // console.log(res);
+          var cookie = res.headers['set-cookie'][0].split(';')[0];
+        
           request(app)
             .get('/secret')
+            .set('Cookie', cookie)
             .expect(200)
             .end(function(err, res) {
-              expect(err).to.not.exist;
               // expect(res.headers.location).to.eql('/secret');
               expect(res.text).to.contain('Secret');
               expect(res.text).to.contain('david');
-              done();
+              done(err);
             });
         });
     });
@@ -288,12 +291,11 @@ describe('Unit 11 Tests', function() {
             
             request(app)
               .get('/secret')
+              .expect(302)
               .end(function(err, res) {
-                expect(res.text).to.contain('Signup');
                 expect(res.headers.location).to.eql('/signup');
                 done();
               });
-              
           });
         });
     });
