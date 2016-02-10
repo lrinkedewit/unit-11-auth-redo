@@ -10,14 +10,23 @@ describe('Authentication', function() {
 
   // for use when setting ssid cokie
   var id;
+  
   before(function(done) {
     User.remove({}, function() {
       Session.remove({}, function() {
-        console.log("Test Database Cleared");
-        done();
+        
+        User.create({
+          username: 'david',
+          password: 'aight'
+        }, function(){
+          
+          done();
+        });
+        
       });
     });
-  })
+  });
+  
   describe('Creating users', function() {
     it('POST request to "/signup" route with correctly formatted body creates a user', function(done) {
       request(app)
@@ -37,37 +46,57 @@ describe('Authentication', function() {
         });
     });
 
-    it('POST request to "/signup" route with incorrectly formatted body should redirect to "/signin" with an error message', function(done) {
-        request(app)
-          .post('/signup')
-          .send({"username": "test2"})
-          .type('form')
-          .end(function(err, res) {
-            expect(res.text.match(/Error/)).to.not.be.null;
-            done();
-          });
+    it('POST request to "/signup" route with incorrectly formatted body should redirect to "/signup" with an error message', function(done) {
+      request(app)
+        .post('/signup')
+        .send({"username": "test2"})
+        .type('form')
+        .end(function(err, res) {
+          expect(res.text.match(/Error/)).to.not.be.null;
+          done();
+        });
     });
 
     it('POST request to "/login" route with correctly formated correct information redirects to "/secret"', function(done) {
       request(app)
         .post('/login')
         .type('form')
-        .send({"username": "test1", "password" : "password1"})
+        .send({ username: 'test1', password: 'password1' })
         .end(function(err, res) {
-          expect(res.headers['location']).to.eql('/secret');
+          expect(res.headers.location).to.eql('/secret');
           done();
         });
     });
 
-    //todo write more test that sends error if login incorrect
+    it('POST request to "/login" route with incorrect password redirects to "/signup"', function(done) {
+      request(app)
+        .post('/login')
+        .type('form')
+        .send({ 'username': 'david', password: 'incorrect' })
+        .end(function(err, res) {
+          expect(res.headers.location).to.eql('/signup');
+          done();
+        });
+    });
+    
+    it('POST request to "/login" route with non-existent user redirects to "/signup"', function(done) {
+      request(app)
+        .post('/login')
+        .type('form')
+        .send({ 'username': 'idontexist', password: 'aight' })
+        .end(function(err, res) {
+          expect(res.headers.location).to.eql('/signup');
+          done();
+        });
+    });
 
-  })
+  });
 
   describe('Cookies',function() {
     it('Header has cookie name of "codesmith"', function(done) {
       request(app)
         .get('/')
-        .expect('set-cookie',/codesmith=/, done)
+        .expect('set-cookie',/codesmith=/, done);
     });
 
     it('"codesmith" cookie has value of "hi"', function(done) {
@@ -79,7 +108,7 @@ describe('Authentication', function() {
     it('Header has a cookie name "secret"', function(done) {
       request(app)
         .get('/')
-        .expect('set-cookie', /secret=/, done)
+        .expect('set-cookie', /secret=/, done);
     });
 
     it('"secret" cookie has a random value from 0-99', function(done) {
@@ -89,7 +118,7 @@ describe('Authentication', function() {
       request(app)
         .get('/')
         .end(function(err, res) {
-          oldNumber = getCookie(res.headers['set-cookie'],'secret')
+          oldNumber = getCookie(res.headers['set-cookie'],'secret');
           request(app)
             .get('/')
             .end(function(err, res) {
@@ -98,7 +127,7 @@ describe('Authentication', function() {
               expect(oldNumber).to.be.within(0,99);
               expect(newNumber).to.not.eql(oldNumber);
               done();
-            })
+            });
         });
     });
 
