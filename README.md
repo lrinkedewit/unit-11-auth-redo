@@ -108,6 +108,8 @@ http://localhost:3000/secret
 ```
 http://localhost:3000/signup
 ```
+  - Hint: Express doesn't parse cookies from the HTTP request by default. You'll need to add in that functionality somehow. Typically with express when we need to add in extra functionality, we do it with middleware.
+- [ ] In `server.js`, modify the `/secret` express route so that the `sessionController.isLoggedIn` middleware verifies the session BEFORE allowing the secret page to be rendered.
 
 ### Bcrypting passwords
 We are going to add a hook that will run before any passwords are saved that will bcrypt passwords before they are saved.
