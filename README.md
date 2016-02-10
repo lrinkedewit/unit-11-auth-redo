@@ -113,12 +113,12 @@ http://localhost:3000/signup
 
 ### Bcrypting passwords
 We are going to add a hook that will run before any passwords are saved that will bcrypt passwords before they are saved.
-- [ ] Have it so that when a new user is created their password is then bcrypted before being saved to the database. Hint: check out [Mongoose Middleware](http://mongoosejs.com/docs/middleware.html)
+- [ ] Have it so that when a new user is created their password is then bcrypted before being saved to the database. 
+  - Hint: To do this the right way, check out [Mongoose Middleware](http://mongoosejs.com/docs/middleware.html)
 - [ ] When a user signs in, implement a method to compare their inputted password to the hashed password in the database
 
 ### Extension
 - [ ] Use [passport](http://passportjs.org/) to create a local session when a user signs up or logs in
-- [ ] Verify a user with [JSON Web Tokens](https://en.wikipedia.org/wiki/JWT) and local storage
 
 ## Resources and links
 - [http://kestas.kuliukas.com/RainbowTables/](http://kestas.kuliukas.com/RainbowTables/)
