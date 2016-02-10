@@ -49,7 +49,7 @@ describe('Unit 11 Tests', function() {
         .end(function(err, res) {
           User.findOne({username: 'test1'}, function(err, user) {
             expect(err).to.be.null;
-            expect(user).to.be.truthy;
+            expect(user).to.exist;
             done();
           });
         });
