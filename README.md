@@ -76,7 +76,7 @@ We will be working with EJS to generate static HTML pages.
 }
 ```
 - [ ] If the POST request is successful, redirect to the `/secret` route
-- [ ] If the POST request body is unsuccessful, display the error message (look into [server-side templating](https://github.com/mde/ejs))
+- [ ] If the POST request is unsuccessful (i.e. your attempt to add a user to the database fails for some reason), render the error message that mongoose returns to the `/signup` page using `res.render`. Feel free to update the `signup.ejs` template to display the error message in a user-friendly way. Check out the [ejs docs](https://github.com/mde/ejs) for syntax examples.
 - [x] Add a route that handles POST requests to `/login`
 - [ ] Modify the `userController.verifyUser` middleware in the `./server/user/userController.js` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to `/signup`
