@@ -135,7 +135,7 @@ We are going to add a hook that will run before any passwords are saved that wil
   - An advantage of using a JWT for our session store is that our server has everything it needs to know about the session right inside the JWT - it doesn't need to perform further lookup in a database. What downsides do you think there are to this method of session store?
   - Be sure to keep your JWT secure by following [best practices](https://stormpath.com/blog/jwt-the-right-way/)
   - To create your JWT, you'll want to use an npm module such as [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
-- [ ] Implement [CSRF](https://github.com/pillarjs/understanding-csrf) security for our forms so that our users sessions can't be hijacked by Cross-Site Request Forgery attacks
+- [ ] Implement [CSRF](https://github.com/pillarjs/understanding-csrf) security for our forms so that our sessions can't be hijacked by Cross-Site Request Forgery attacks
   - As is typical with express, bringing in a [CSRF middleware](https://github.com/expressjs/csurf) gives us the functionality we need for this type of security.
   
 
