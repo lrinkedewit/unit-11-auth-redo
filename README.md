@@ -128,6 +128,8 @@ We are going to add a hook that will run before any passwords are saved that wil
   - [ ] Take some time to glean some information from the following articles. Try to understand the use cases for Redis and why session store might be a good use for it. What are the trade-offs of using Redis vs Mongo for a session store?
     - [ ] [How to take advantage of Redis](http://oldblog.antirez.com/post/take-advantage-of-redis-adding-it-to-your-stack.html)
     - [ ] [Redis tutorial + use cases](https://web.archive.org/web/20120118030804/http://simonwillison.net/static/2010/redis-tutorial/)
+  - [ ] Start your redis server with the `redis-server` command in a separate command-line window
+  - [ ] You'll want to use the [node_redis](https://github.com/NodeRedis/node_redis) library for interacting with Redis
   
 
 ## Resources and links
