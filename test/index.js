@@ -165,6 +165,14 @@ describe('Unit 11 Tests', function() {
         .send({ username: 'david', password: 'aight' })
         .expect('set-cookie', /ssid=/, done);
     });
+    
+    it('Header has a cookie named "ssid" when a user successfully signs up', function(done) {
+      request(app)
+        .post('/signup')
+        .type('form')
+        .send({ username: 'newuser', password: 'cool' })
+        .expect('set-cookie', /ssid=/, done);
+    });
 
     it('"ssid" cookie has value of user', function(done) {
       var regex = new RegExp(id);

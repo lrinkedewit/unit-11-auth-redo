@@ -92,7 +92,7 @@ http://localhost:3000/signin
 - [ ] Inside of `cookieController.setSSIDCookie`, create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
 
 ### Sessions
-- [ ] Create a session when a user creates an account. A session has the following properties:
+- [ ] Create a session when a user creates an account. For now, each session will simply be a document in a Mongo database. A session has the following properties:
 ```
 cookieId: [String]
 ```
