@@ -5,13 +5,19 @@ var Cookies = require('cookies');
 var Session = require('./../server/session/sessionModel');
 var User = require('./../server/user/userModel');
 var bcrypt = require('bcryptjs');
+var sinon = require('sinon');
 
-describe('Authentication', function() {
-
-  // for use when setting ssid cokie
+describe('Unit 11 Tests', function() {
+  
   var id;
+  var clock;
+  
+  before(function() {
+    clock = sinon.useFakeTimers();
+  });
   
   beforeEach(function(done) {
+    
     User.remove({}, function() {
       Session.remove({}, function() {
         
@@ -25,9 +31,16 @@ describe('Authentication', function() {
         
       });
     });
+    
+    
+  });
+  
+  after(function() {
+    clock.restore();
   });
   
   describe('Creating users', function() {
+    
     it('POST request to "/signup" route with correctly formatted body creates a user', function(done) {
       request(app)
         .post('/signup')
@@ -69,6 +82,10 @@ describe('Authentication', function() {
           });
         });
     });
+    
+  });
+  
+  describe('Authenticating users', function() {
 
     it('POST request to "/login" route with correctly formated correct information redirects to "/secret"', function(done) {
       request(app)
@@ -105,7 +122,8 @@ describe('Authentication', function() {
 
   });
 
-  describe('Cookies',function() {
+  describe('Cookies', function() {
+    
     it('Header has cookie name of "codesmith"', function(done) {
       request(app)
         .get('/')
@@ -160,6 +178,7 @@ describe('Authentication', function() {
         .send({"username": "test1", "password" : "password1"})
         .expect('set-cookie', regex, done);
     });
+    
   });
 
   describe('Sessions', function() {
@@ -200,10 +219,10 @@ describe('Authentication', function() {
       request(app)
         .post('/login')
         .type('form')
-        .send({username: 'david', password: 'wrong password'})
+        .send({ username: 'david', password: 'wrong password' })
         .end(function(err, res) {
-          User.findOne({username: 'david'}, function(err, user) {
-            Session.findOne({cookieId: user._id}, function(err, session) {
+          User.findOne({ username: 'david' }, function(err, user) {
+            Session.findOne({ cookieId: user._id }, function(err, session) {
               expect(err).to.be.null;
               expect(session).to.not.exist;
               done();
@@ -212,15 +231,39 @@ describe('Authentication', function() {
         });
     });
     
+    it('Session expires after 30 seconds', function(done) {
+      request(app)
+        .post('/login')
+        .type('form')
+        .send({ username: 'david', password: 'aight' })
+        .end(function(err, res) {
+          User.findOne({ username: 'david' }, function(err, user) {
+            Session.findOne({ cookieId: user._id }, function(err, session) {
+              expect(err).to.be.null;
+              expect(session).to.exist;
+              
+              clock.tick(30000);
+              
+              Session.findOne({ cookieId: user._id }, function(err, session) {
+                expect(err).to.be.null;
+                expect(session).to.not.exist;
+                done();
+              });
+            });
+          });
+        });
+    });
+    
   });
 
-  //too write more tests
-  describe('Blocking certain pages', function() {
+  describe('Authorizing users', function() {
+    
     it('Block "/secret" if session not active', function(done) {
      request(app)
        .get('/secret')
        .end(function(err, res) {
-        expect(res.text.match(/Secret/g)).to.be.null;
+        expect(res.text).to.not.include('Secret');
+        expect(res.text).to.not.include('david');
         done();
        });
     });
@@ -230,12 +273,34 @@ describe('Authentication', function() {
        .get('/secret')
        .end(function(err, res) {
         expect(res.text.to.include('Signup'));
+        expect(res.headers.location).to.eql('/signup');
         done();
        });
     });
+    
+    it('Allows access to "/secret" if session active', function(done) {
+      request(app)
+        .post('/login')
+        .type('form')
+        .send({ username: 'david', password: 'aight' })
+        .end(function(err, res) {
+          request(app)
+            .get('/secret')
+            .expect(200)
+            .end(function(err, res) {
+              expect(err).to.not.exist;
+              // expect(res.headers.location).to.eql('/secret');
+              expect(res.text).to.contain('Secret');
+              expect(res.text).to.contain('david');
+              done();
+            });
+        });
+    });
+    
   });
 
-  describe('Bcrypt', function() {
+  describe('Bcrypting passwords', function() {
+    
     it('Passwords should not be stored in plaintext', function(done) {
       request(app)
         .post('/signup')
@@ -252,7 +317,7 @@ describe('Authentication', function() {
     it('Passwords be bcrypted', function(done) {
       request(app)
         .post('/signup')
-        .send({"username": "test4", "password" : "password4"})
+        .send({ username: 'test4', password: 'password4' })
         .type('form')
         .end(function(err, res) {
           User.findOne({username: 'test4'}, function(err, user) {
@@ -261,9 +326,8 @@ describe('Authentication', function() {
           });
         });
     });
-
   });
-
+  
 });
 
 function getCookieValue(cookie) {
