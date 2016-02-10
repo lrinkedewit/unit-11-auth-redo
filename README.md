@@ -90,6 +90,8 @@ http://localhost:3000/signin
 - [ ] Verify in Chrome that the `codesmith` cookie is being sent by starting your server and navigating to `localhost:3000/`. Open up the Chrome dev tools, go to the `Resources` tab, and find the `codesmith` cookie in the Cookies section.
 - [ ] Inside of `cookieController.setCookie` middleware, create a cookie named 'secret' with a value that is a random number generated from 0-99 that should be sent to the server with all requests
 - [ ] Inside of `cookieController.setSSIDCookie`, create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
+- [ ] Follow best practices by making the `ssid` cookie HttpOnly. This means that client-side JavaScript cannot access your cookie, which greatly decreases the likelihood of it being stolen or manipulated by malicious JavaScript running on the client. 
+  - [Why use HttpOnly?](http://scottksmith.com/blog/2014/09/04/simple-steps-to-secure-your-express-node-application/)
 
 ### Sessions
 - [ ] Create a session when a user creates an account. For now, each session will simply be a document in a Mongo database. A session has the following properties:
@@ -119,6 +121,14 @@ We are going to add a hook that will run before any passwords are saved that wil
 
 ### Extension
 - [ ] Use [passport](http://passportjs.org/) to create a local session when a user signs up or logs in
+  - [ ] Commit your work and make a new branch before implementing Passport, since it will require heavy modification to your route middleware.
+  - [ ] Be sure to understand how a passport local session works. "local session" here means that the session will be stored in memory, no longer kept in our Mongo database. Why might this type of session store be advantagous? What are we giving up by doing this?
+- [ ] Setup [Redis](http://redis.io/) as your session store
+  - [ ] Install Redis locally following their [quickstart](http://redis.io/topics/quickstart) guide
+  - [ ] Take some time to glean some information from the following articles. Try to understand the use cases for Redis and why session store might be a good use for it. What are the trade-offs of using Redis vs Mongo for a session store?
+    - [ ] [How to take advantage of Redis](http://oldblog.antirez.com/post/take-advantage-of-redis-adding-it-to-your-stack.html)
+    - [ ] [Redis tutorial + use cases](https://web.archive.org/web/20120118030804/http://simonwillison.net/static/2010/redis-tutorial/)
+  
 
 ## Resources and links
 - [http://kestas.kuliukas.com/RainbowTables/](http://kestas.kuliukas.com/RainbowTables/)
