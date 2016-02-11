@@ -87,6 +87,7 @@ We will be working with EJS to generate static HTML pages.
 - [ ] Verify in Chrome that the `codesmith` cookie is being sent by starting your server and navigating to `localhost:3000/`. Open up the Chrome dev tools, go to the `Resources` tab, and find the `codesmith` cookie in the Cookies section.
 - [ ] Inside of `cookieController.setCookie` middleware, create a cookie named 'secret' with a value that is a random number generated from 0-99 that should be sent to the server with all requests
 - [ ] Inside of `cookieController.setSSIDCookie`, create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
+- [ ] After a user successfully signs up or logs in, call the `cookieController.setSSIDCookie` function to add the `ssid` cookie to the response.
 - [ ] Follow best practices by making the `ssid` cookie HttpOnly. This means that client-side JavaScript cannot access your cookie, which greatly decreases the likelihood of it being stolen or manipulated by malicious JavaScript running on the client. 
   - [Why use HttpOnly?](http://scottksmith.com/blog/2014/09/04/simple-steps-to-secure-your-express-node-application/)
 
