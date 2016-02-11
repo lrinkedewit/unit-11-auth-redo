@@ -331,11 +331,20 @@ describe('Unit 11 Tests', function() {
         .type('form')
         .end(function(err, res) {
           User.findOne({username: 'test4'}, function(err, user) {
-            expect(bcrypt.compareSync('password4',user.password)).to.be.true;
+            expect(bcrypt.compareSync('password4', user.password)).to.be.true;
             done();
           });
         });
     });
+    
+    it('Bcrypts passwords in Mongoose middleware, not in userController', function(done) {
+      User.create({ username: 'petri', password: 'aight' }, function(err, user) {
+        expect(user.password).to.not.eql('aight');
+        expect(bcrypt.compareSync('aight', user.password)).to.be.true;
+        done();
+      });
+    });
+    
   });
   
 });
