@@ -138,6 +138,14 @@ We are going to add a hook that will run before any passwords are saved that wil
   - To create your JWT, you'll want to use an npm module such as [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
 - [ ] Implement [CSRF](https://github.com/pillarjs/understanding-csrf) security for our forms so that our sessions can't be hijacked by Cross-Site Request Forgery attacks
   - As is typical with express, bringing in a [CSRF middleware](https://github.com/expressjs/csurf) gives us the functionality we need for this type of security.
+- [ ] Implement an OAuth login flow so that the user can sign in with their [GitHub account](https://developer.github.com/v3/oauth/#web-application-flow).
+  - You'll need to register with GitHub to acquire a `client_id` and specify the OAuth `redirect_uri` for your application
+  - You'll also need to add a button to your `/login` page that sends the client to `https://github.com/login/oauth/authorize` with your client_id and redirect_uri included as `urlencoded` parameters. The href for the link will end up looking something like this: `https://github.com/login/oauth/authorize?client_id=123456&redirect_uri=http://localhost:3000/your_registered_redirect_route`
+  - Once the client goes to that page and logs in with their GitHub information, GitHub will send them back to your redirect url and include a temporary `code` in the url as a url encoded parameter. You'll need a route to handle that request, retrieve the code from the url, POST it back to GitHub, and finally receive the user's **token** in GitHub's response to your POST.
+  - Once you acquire a token for the user, store it using the session store of your choice (Mongo session, local session, Redis session, JWT session, etc...)
+  - Allow the user to view some information from their GitHub profile by navigating to the `/profile` route.
+- [ ] Finally, give the user a `logout` button that deletes their session information
+  - The `logout` button should only be visible when the user is logged in
   
 
 ## Resources and links
