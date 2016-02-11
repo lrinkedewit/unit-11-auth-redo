@@ -145,6 +145,7 @@ We are going to add a hook that will run before any passwords are saved that wil
   - Once the client goes to that page and logs in with their GitHub information, GitHub will send them back to your redirect url and include a temporary `code` in the url as a url encoded parameter. You'll need a route to handle that request, retrieve the code from the url, POST it back to GitHub, and finally receive the user's **token** in GitHub's response to your POST.
   - Once you acquire a token for the user, store it using the session store of your choice (Mongo session, local session, Redis session, JWT session, etc...)
   - Allow the user to view some information from their GitHub profile by navigating to the `/profile` route.
+    - Hint: you'll need to use their **token** to make an authenticated request to the appropriate [GitHub API](https://developer.github.com/v3/users/#get-the-authenticated-user) route
 - [ ] Finally, give the user a `logout` button that deletes their session information
   - The `logout` button should only be visible when the user is logged in
   
