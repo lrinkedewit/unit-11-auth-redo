@@ -119,7 +119,8 @@ We are going to add a hook that will run before any passwords are saved that wil
 - [ ] When a user signs in, implement a method to compare their inputted password to the hashed password in the database
 
 ### Extension
-**Note:** There are no tests in place for these challenges at this time.
+**Note:** There are no tests in place for these challenges at this time. Read through them and choose the one that seems most interesting. You will likely not have enough time to do more than one!
+
 - [ ] Use [passport](http://passportjs.org/) to create a local session when a user signs up or logs in
   - Commit your work and make a new branch before implementing Passport, since it will require heavy modification to your route middleware.
   - Be sure to understand how a passport local session works. "local session" here means that the session will be stored in memory, no longer kept in our Mongo database. Why might this type of session store be advantagous? What are we giving up by doing this?
