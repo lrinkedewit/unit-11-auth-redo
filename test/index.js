@@ -6,20 +6,20 @@ var User = require('./../server/user/userModel');
 var bcrypt = require('bcryptjs');
 var sinon = require('sinon');
 
-describe('Unit 11 Tests', function() {
-  
+describe('Unit 10 Tests', function() {
+
   var id;
   var clock;
-  
+
   before(function() {
     clock = sinon.useFakeTimers();
   });
-  
+
   beforeEach(function(done) {
-    
+
     User.remove({}, function() {
       Session.remove({}, function() {
-        
+
         User.create({
           username: 'david',
           password: 'aight'
@@ -27,19 +27,19 @@ describe('Unit 11 Tests', function() {
           id = user.id;
           done();
         });
-        
+
       });
     });
-    
-    
+
+
   });
-  
+
   after(function() {
     clock.restore();
   });
-  
+
   describe('Creating users', function() {
-    
+
     it('POST request to "/signup" route with correctly formatted body creates a user', function(done) {
       request(app)
         .post('/signup')
@@ -64,7 +64,7 @@ describe('Unit 11 Tests', function() {
           done();
         });
     });
-    
+
     it('POST request to "/signup" route with incorrectly formatted body does not create a new User', function(done) {
       request(app)
         .post('/signup')
@@ -77,9 +77,9 @@ describe('Unit 11 Tests', function() {
           });
         });
     });
-    
+
   });
-  
+
   describe('Authenticating users', function() {
 
     it('POST request to "/login" route with correctly formated correct information redirects to "/secret"', function(done) {
@@ -103,7 +103,7 @@ describe('Unit 11 Tests', function() {
           done();
         });
     });
-    
+
     it('POST request to "/login" route with non-existent user redirects to "/signup"', function(done) {
       request(app)
         .post('/login')
@@ -118,7 +118,7 @@ describe('Unit 11 Tests', function() {
   });
 
   describe('Cookies', function() {
-    
+
     it('Header has cookie name of "codesmith"', function(done) {
       request(app)
         .get('/')
@@ -164,7 +164,7 @@ describe('Unit 11 Tests', function() {
         .send({ username: 'david', password: 'aight' })
         .expect('set-cookie', /ssid=/, done);
     });
-    
+
     it('"ssid" cookie is HttpOnly', function(done) {
       request(app)
         .post('/login')
@@ -172,7 +172,7 @@ describe('Unit 11 Tests', function() {
         .send({ username: 'david', password: 'aight' })
         .expect('set-cookie', /HttpOnly/, done);
     });
-    
+
     it('Header has a cookie named "ssid" when a user successfully signs up', function(done) {
       request(app)
         .post('/signup')
@@ -189,11 +189,11 @@ describe('Unit 11 Tests', function() {
         .send({ username: 'david', password : 'aight' })
         .expect('set-cookie', regex, done);
     });
-    
+
   });
 
   describe('Sessions', function() {
-    
+
     it('Creates a session when a user successfully creates an account', function(done) {
       request(app)
         .post('/signup')
@@ -225,7 +225,7 @@ describe('Unit 11 Tests', function() {
           });
         });
     });
-    
+
     it('Does not create a session if login unsuccessful', function(done) {
       request(app)
         .post('/login')
@@ -241,11 +241,11 @@ describe('Unit 11 Tests', function() {
           });
         });
     });
-    
+
   });
 
   describe('Authorizing users', function() {
-    
+
     it('Block "/secret" if session not active', function(done) {
      request(app)
        .get('/secret')
@@ -255,7 +255,7 @@ describe('Unit 11 Tests', function() {
         done();
        });
     });
-    
+
     it('Redirects from "/secret" to "/signup" if session not active', function(done) {
      request(app)
        .get('/secret')
@@ -265,7 +265,7 @@ describe('Unit 11 Tests', function() {
         done();
        });
     });
-    
+
     it('Allows access to "/secret" if session active', function(done) {
       request(app)
         .post('/login')
@@ -274,7 +274,7 @@ describe('Unit 11 Tests', function() {
         .end(function(err, res) {
           // console.log(res);
           var cookie = res.headers['set-cookie'][0].split(';')[0];
-        
+
           request(app)
             .get('/secret')
             .set('Cookie', cookie)
@@ -287,7 +287,7 @@ describe('Unit 11 Tests', function() {
             });
         });
     });
-    
+
     it('Should not be able to access "/secret" after session expires', function(done) {
       request(app)
         .post('/login')
@@ -295,7 +295,7 @@ describe('Unit 11 Tests', function() {
         .send({ username: 'david', password: 'aight' })
         .end(function(err, res) {
           Session.remove({ cookieId: id }, function(err, session) {
-            
+
             request(app)
               .get('/secret')
               .expect(302)
@@ -306,11 +306,11 @@ describe('Unit 11 Tests', function() {
           });
         });
     });
-    
+
   });
 
   describe('Bcrypting passwords', function() {
-    
+
     it('Passwords should not be stored in plaintext', function(done) {
       request(app)
         .post('/signup')
@@ -336,7 +336,7 @@ describe('Unit 11 Tests', function() {
           });
         });
     });
-    
+
     it('Bcrypts passwords in Mongoose middleware, not in userController', function(done) {
       User.create({ username: 'petri', password: 'aight' }, function(err, user) {
         expect(user.password).to.not.eql('aight');
@@ -344,9 +344,9 @@ describe('Unit 11 Tests', function() {
         done();
       });
     });
-    
+
   });
-  
+
 });
 
 function getCookieValue(cookie) {
