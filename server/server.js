@@ -8,7 +8,7 @@ const userController = require('./user/userController');
 const cookieController = require('./util/cookieController');
 const sessionController = require('./session/sessionController');
 
-var app = express();
+const app = express();
 
 const mongoURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost/unit11test' : 'mongodb://localhost/unit11dev';
 mongoose.connect(mongoURI);
@@ -38,22 +38,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**
 * root
 */
-app.get('/', function(req, res) {
-  
+app.get('/', (req, res) => {
+
   /**
   * Since we set `ejs` to be the view engine above, `res.render` will parse the
   * template page we pass it (in this case 'client/secret.ejs') as ejs and produce
   * a string of proper HTML which will be sent to the client!
   */
   res.render('./../client/index');
-  
+
 });
 
 
 /**
 * signup
 */
-app.get('/signup', function(req, res) {
+app.get('/signup', (req, res) => {
   res.render('./../client/signup', {error: null});
 });
 
@@ -69,10 +69,10 @@ app.post('/login', userController.verifyUser);
 /**
 * Authorized routes
 */
-app.get('/secret', function(req, res) {
-  userController.getAllUsers(function(err, users) {
+app.get('/secret', (req, res) => {
+  userController.getAllUsers((err, users) => {
     if (err) throw err;
-    
+
     res.render('./../client/secret', { users: users });
   });
 });

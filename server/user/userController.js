@@ -1,15 +1,15 @@
-var User = require('./userModel');
-var cookieController = require('./../util/cookieController');
-var sessionController = require('./../session/sessionController');
+const User = require('./userModel');
+const cookieController = require('./../util/cookieController');
+const sessionController = require('./../session/sessionController');
 
-var userController = {};
+const userController = {};
 
 /**
 * getAllUsers
 *
 * @param next - Callback Function w signature (err, users)
 */
-userController.getAllUsers = function(next) {
+userController.getAllUsers = (next) => {
   User.find({}, next);
 };
 
@@ -19,9 +19,9 @@ userController.getAllUsers = function(next) {
 * @param req - http.IncomingRequest
 * @param rs - http.ServerResponse
 */
-userController.createUser = function(req, res) {
+userController.createUser = (req, res) => {
   // write code here
-  
+
 };
 
 /**
@@ -32,7 +32,7 @@ userController.createUser = function(req, res) {
 * @param req - http.IncomingRequest
 * @param rs - http.ServerResponse
 */
-userController.verifyUser = function(req, res) {
+userController.verifyUser = (req, res) => {
   // write code here
 };
 

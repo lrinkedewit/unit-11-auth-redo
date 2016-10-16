@@ -1,5 +1,5 @@
 {
-  "name": "unit-11-authentication",
+  "name": "unit-10-authentication",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CodesmithLLC/unit-11-authentication.git"
+    "url": "git+https://github.com/CodesmithLLC/unit-10-authentication.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CodesmithLLC/unit-11-authentication/issues"
+    "url": "https://github.com/CodesmithLLC/unit-10-authentication/issues"
   },
-  "homepage": "https://github.com/CodesmithLLC/unit-11-authentication#readme",
+  "homepage": "https://github.com/CodesmithLLC/unit-10-authentication#readme",
   "dependencies": {
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.14.2",
