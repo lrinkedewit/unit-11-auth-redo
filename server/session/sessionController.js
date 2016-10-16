@@ -1,6 +1,6 @@
-var Session = require('./sessionModel');
+const Session = require('./sessionModel');
 
-var sessionController = {};
+const sessionController = {};
 
 /**
 * isLoggedIn - find the appropriate session for this request in the database, then
@@ -10,7 +10,7 @@ var sessionController = {};
 * @param rs - http.ServerResponse
 * @param next - Callback with signature ([err])
 */
-sessionController.isLoggedIn = function(req, res, next) {
+sessionController.isLoggedIn = (req, res, next) => {
   // write code here
 
   next();
@@ -23,7 +23,7 @@ sessionController.isLoggedIn = function(req, res, next) {
 * @param cookieId - id to use as the id of the new session
 * @param callback - Callback with signature (Session)
 */
-sessionController.startSession = function(cookieId, callback) {
+sessionController.startSession = (cookieId, callback) => {
   //write code here
 
 };
