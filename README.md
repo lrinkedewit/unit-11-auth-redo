@@ -88,7 +88,7 @@ We will be working with EJS to generate static HTML pages.
 - [ ] Inside of `cookieController.setCookie` middleware, create a cookie named 'secret' with a value that is a random number generated from 0-99 that should be sent to the server with all requests
 - [ ] Inside of `cookieController.setSSIDCookie`, create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
 - [ ] After a user successfully signs up or logs in, call the `cookieController.setSSIDCookie` function to add the `ssid` cookie to the response.
-- [ ] Follow best practices by making the `ssid` cookie HttpOnly. This means that client-side JavaScript cannot access your cookie, which greatly decreases the likelihood of it being stolen or manipulated by malicious JavaScript running on the client. 
+- [ ] Follow best practices by making the `ssid` cookie HttpOnly. This means that client-side JavaScript cannot access your cookie, which greatly decreases the likelihood of it being stolen or manipulated by malicious JavaScript running on the client.
   - [Why use HttpOnly?](http://scottksmith.com/blog/2014/09/04/simple-steps-to-secure-your-express-node-application/)
 
 ### Sessions
@@ -114,24 +114,13 @@ http://localhost:3000/signup
 
 ### Bcrypting passwords
 We are going to add a hook that will run before any passwords are saved that will bcrypt passwords before they are saved.
-- [ ] Have it so that when a new user is created their password is then bcrypted before being saved to the database. 
+- [ ] Have it so that when a new user is created their password is then bcrypted before being saved to the database.
   - Hint: To do this the right way, check out [Mongoose Middleware](http://mongoosejs.com/docs/middleware.html)
 - [ ] When a user signs in, implement a method to compare their inputted password to the hashed password in the database
 
 ### Extension
 **Note:** There are no tests in place for these challenges at this time. Read through them and choose the one that seems most interesting. You will likely not have enough time to do more than one!
 
-- [ ] Use [passport](http://passportjs.org/) to create a local session when a user signs up or logs in
-  - Commit your work and make a new branch before implementing Passport, since it will require heavy modification to your route middleware.
-  - Be sure to understand how a passport local session works. "local session" here means that the session will be stored in memory, no longer kept in our Mongo database. Why might this type of session store be advantagous? What are we giving up by doing this?
-- [ ] Setup [Redis](http://redis.io/) as your session store
-  - Since this will require heavy refactoring, you'll likely want to make a new branch before implementing this section
-  - Install Redis locally following their [quickstart](http://redis.io/topics/quickstart) guide
-  - Take some time to glean some information from the following articles. Try to understand the use cases for Redis and why session store might be a good use for it. What are the trade-offs of using Redis vs Mongo for a session store?
-    - [How to take advantage of Redis](http://oldblog.antirez.com/post/take-advantage-of-redis-adding-it-to-your-stack.html)
-    - [Redis tutorial + use cases](https://web.archive.org/web/20120118030804/http://simonwillison.net/static/2010/redis-tutorial/)
-  - Start your redis server with the `redis-server` command in a separate command-line window
-  - You'll want to use the [node_redis](https://github.com/NodeRedis/node_redis) library for interacting with Redis
 - [ ] Use a JSON Web Token stored inside our `ssid` cookie as your session store
   - Again, you'll probably want to make a new branch off of your master before starting this section.
   - A [JWT](https://jwt.io/), or JSON Web Token, is a standard for storing signed, verifiable information that cannot be modified by the client
@@ -147,9 +136,20 @@ We are going to add a hook that will run before any passwords are saved that wil
   - Once you acquire a token for the user, store it using the session store of your choice (Mongo session, local session, Redis session, JWT session, etc...)
   - Allow the user to view some information from their GitHub profile by navigating to the `/profile` route.
     - Hint: you'll need to use their **token** to make an authenticated request to the appropriate [GitHub API](https://developer.github.com/v3/users/#get-the-authenticated-user) route
+- [ ] Use [passport](http://passportjs.org/) to create a local session when a user signs up or logs in
+  - Commit your work and make a new branch before implementing Passport, since it will require heavy modification to your route middleware.
+  - Be sure to understand how a passport local session works. "local session" here means that the session will be stored in memory, no longer kept in our Mongo database. Why might this type of session store be advantagous? What are we giving up by doing this?
+- [ ] Setup [Redis](http://redis.io/) as your session store
+  - Since this will require heavy refactoring, you'll likely want to make a new branch before implementing this section
+  - Install Redis locally following their [quickstart](http://redis.io/topics/quickstart) guide
+  - Take some time to glean some information from the following articles. Try to understand the use cases for Redis and why session store might be a good use for it. What are the trade-offs of using Redis vs Mongo for a session store?
+    - [How to take advantage of Redis](http://oldblog.antirez.com/post/take-advantage-of-redis-adding-it-to-your-stack.html)
+    - [Redis tutorial + use cases](https://web.archive.org/web/20120118030804/http://simonwillison.net/static/2010/redis-tutorial/)
+  - Start your redis server with the `redis-server` command in a separate command-line window
+  - You'll want to use the [node_redis](https://github.com/NodeRedis/node_redis) library for interacting with Redis
 - [ ] Finally, give the user a `logout` button that deletes their session information
   - The `logout` button should only be visible when the user is logged in
-  
+
 
 ## Resources and links
 - [http://kestas.kuliukas.com/RainbowTables/](http://kestas.kuliukas.com/RainbowTables/)
