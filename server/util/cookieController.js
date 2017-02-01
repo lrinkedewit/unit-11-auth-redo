@@ -22,9 +22,9 @@ function setCookie(req, res, next) {
 *
 * @param req - http.IncomingRequest
 * @param res - http.ServerResponse
-* @param id - id of the cookie to set
+* @param next - Callback with signature ([err])
 */
-function setSSIDCookie(req, res, id) {
+function setSSIDCookie(req, res, next) {
   // write code here
 
 }
