@@ -7,7 +7,7 @@ const sessionController = {};
 * verify whether or not the session is still valid.
 *
 * @param req - http.IncomingRequest
-* @param rs - http.ServerResponse
+* @param res - http.ServerResponse
 * @param next - Callback with signature ([err])
 */
 sessionController.isLoggedIn = (req, res, next) => {

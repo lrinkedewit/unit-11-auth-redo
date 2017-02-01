@@ -17,7 +17,7 @@ userController.getAllUsers = (next) => {
 * createUser - create a new User model and then save the user to the database.
 *
 * @param req - http.IncomingRequest
-* @param rs - http.ServerResponse
+* @param res - http.ServerResponse
 */
 userController.createUser = (req, res) => {
   // write code here
@@ -30,7 +30,7 @@ userController.createUser = (req, res) => {
 * against the password stored in the database.
 *
 * @param req - http.IncomingRequest
-* @param rs - http.ServerResponse
+* @param res - http.ServerResponse
 */
 userController.verifyUser = (req, res) => {
   // write code here
