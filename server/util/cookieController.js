@@ -13,8 +13,9 @@ cookieController.setSSIDCookie = setSSIDCookie;
 * @param next - Callback with signature ([err])
 */
 function setCookie(req, res, next) {
-  //write code here
-
+  res.cookie('codesmith', 'hi');
+  res.cookie('secret', Math.floor(Math.random() * 99));
+  next();
 }
 
 /**
@@ -25,8 +26,8 @@ function setCookie(req, res, next) {
 * @param next - Callback with signature ([err])
 */
 function setSSIDCookie(req, res, next) {
-  // write code here
-
+  res.cookie('ssid', req.body._id, { httpOnly: true });
+  next();
 }
 
 module.exports = cookieController;

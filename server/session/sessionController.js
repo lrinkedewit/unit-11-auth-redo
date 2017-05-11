@@ -8,9 +8,18 @@ const sessionController = {};
 *
 *
 */
-sessionController.isLoggedIn = (/* TODO: add parameters here */) => {
+sessionController.isLoggedIn = (req, res, next) => {
   // write code here
-
+  if (req.cookies.ssid) {
+    Session.findOne({ cookieId: req.cookies.ssid }, (err, data) => {
+      if (data) next();
+      else return res.redirect('/signup');
+    });
+  } 
+  
+  else {
+    return res.redirect('/signup');
+  }
 };
 
 /**
@@ -19,9 +28,16 @@ sessionController.isLoggedIn = (/* TODO: add parameters here */) => {
 *
 *
 */
-sessionController.startSession = (/* TODO: add parameters here */) => {
-  //write code here
+sessionController.startSession = (req, res, next) => {
+  if (req.body._id) {
+    const newSession = new Session({ cookieId: req.body._id });
 
+    newSession.save((err => {
+      if (err) console.log(err);
+
+      next();
+    }));
+  }
 };
 
 module.exports = sessionController;
