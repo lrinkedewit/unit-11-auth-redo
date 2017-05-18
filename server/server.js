@@ -28,6 +28,7 @@ app.get('/signup', (req, res) => {
   res.render('./../client/signup', {error: null});
 });
 
+
 app.post('/signup',
 userController.createUser,
 cookieController.setSSIDCookie,
