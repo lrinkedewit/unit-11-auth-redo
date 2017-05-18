@@ -1,7 +1,6 @@
 const User = require('./userModel');
 const cookieController = require('./../util/cookieController');
 const sessionController = require('./../session/sessionController');
-const bcrypt = require('bcryptjs');
 
 const userController = {};
 
@@ -20,26 +19,9 @@ userController.getAllUsers = (next) => {
 * @param req - http.IncomingRequest
 * @param res - http.ServerResponse
 */
-userController.createUser = (req, res, next) => {
-  // Validate inputs
-  if (!req.body.username || !req.body.password) {
-    res.render('./../client/signup', { error: 'Invalid username/password.' });
-  }
-  // Create model instance to use Model.save();
-  const newUser = new User({
-    username: req.body.username,
-    password: req.body.password
-  });
+userController.createUser = (req, res) => {
+  // write code here
 
-  newUser.save((err, data) => {
-    if (err) {
-      return res.render('./../client/signup', { error: err });
-    }
-    // Make mongoose generated ._id available on body object.
-    req.body._id = data._id;
-
-    next();
-  });
 };
 
 /**
@@ -50,20 +32,8 @@ userController.createUser = (req, res, next) => {
 * @param req - http.IncomingRequest
 * @param res - http.ServerResponse
 */
-userController.verifyUser = (req, res, next) => {
-  User.findOne({ username: req.body.username }, (err, data) => {
-
-    if (data === null) {
-      return res.redirect('/signup');
-    }
-
-    bcrypt.compare(req.body.password, data.password, (err, result) => {
-      if (result) {
-        req.body._id = data._id;
-        next();
-      } else return res.redirect('/signup');
-    });
-  });
+userController.verifyUser = (req, res) => {
+  // write code here
 };
 
 module.exports = userController;

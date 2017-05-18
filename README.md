@@ -61,67 +61,62 @@ We will be working with EJS to generate static HTML pages.
  - **Note:** You'll need to type your login password for the computer in order to start the server since the `npm start` command also starts a local **Mongo** database. This also means you'll need to setup [MongoDB](https://docs.mongodb.org/manual/installation/) before running this on your own machine. The Mac Minis already have MongoDB installed.
 
 ### Testing
-- [x] Run `npm test` in your terminal to test your code
-- [x] Additionally, you should be constantly testing out your code in the browser to assess its functionality.
+- [ ] Run `npm test` in your terminal to test your code
+- [ ] Additionally, you should be constantly testing out your code in the browser to assess its functionality.
 
 ##Challenges
 
 ### Creating users
 - [x] Add route to handle POST requests to `/signup`
-- [x] Modify the `userController.createUser` middleware in the `./server/user/userController.js` file to create a user from the client's request. Users require the following properties:
+- [ ] Modify the `userController.createUser` middleware in the `./server/user/userController.js` file to create a user from the client's request. Users require the following properties:
 ```
 {
   username: [String]
   password: [String]
 }
-
-1. Use body-parser to access request body.
-2. Validate username and password;
-3. Use User.save() or Model.create()
-
 ```
-- [x] If the POST request is successful, redirect to the `/secret` route
-- [x] If the POST request is unsuccessful (i.e. your attempt to add a user to the database fails for some reason), render the error message that mongoose returns to the `/signup` page using `res.render`. Feel free to update the `signup.ejs` template to display the error message in a user-friendly way. Check out the [ejs docs](https://github.com/mde/ejs) for syntax examples.
+- [ ] If the POST request is successful, redirect to the `/secret` route
+- [ ] If the POST request is unsuccessful (i.e. your attempt to add a user to the database fails for some reason), render the error message that mongoose returns to the `/signup` page using `res.render`. Feel free to update the `signup.ejs` template to display the error message in a user-friendly way. Check out the [ejs docs](https://github.com/mde/ejs) for syntax examples.
 - [x] Add a route that handles POST requests to `/login`
-- [x] Modify the `userController.verifyUser` middleware in the `./server/user/userController.js` file to check if a user exists and the password is correct
-- [x] If the username cannot be found or the password is incorrect, they should be redirected to `/signup`
+- [ ] Modify the `userController.verifyUser` middleware in the `./server/user/userController.js` file to check if a user exists and the password is correct
+- [ ] If the username cannot be found or the password is incorrect, they should be redirected to `/signup`
 
 ### Create a cookie
-- [x] Inside of the `cookieController.setCookie` middleware, create a cookie named 'codesmith' with the value of 'hi' and attach it to express's response
-- [x] Insert the `cookieController.setCookie` middleware into the `/` route so that requests to `/` have the `codesmith` cookie sent with the response
-- [x] Verify in Chrome that the `codesmith` cookie is being sent by starting your server and navigating to `localhost:3000/`. Open up the Chrome dev tools, go to the `Application` tab, and find the `codesmith` cookie in the Cookies section.
-- [x] Inside of `cookieController.setCookie` middleware, create a cookie named 'secret' with a value that is a random number generated from 0-99 that should be sent to the server with all requests
-- [x] Inside of `cookieController.setSSIDCookie`, create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
-- [x] After a user successfully signs up or logs in, call the `cookieController.setSSIDCookie` function to add the `ssid` cookie to the response.
-- [x] Follow best practices by making the `ssid` cookie HttpOnly. This means that client-side JavaScript cannot access your cookie, which greatly decreases the likelihood of it being stolen or manipulated by malicious JavaScript running on the client.
+- [ ] Inside of the `cookieController.setCookie` middleware, create a cookie named 'codesmith' with the value of 'hi' and attach it to express's response
+- [ ] Insert the `cookieController.setCookie` middleware into the `/` route so that requests to `/` have the `codesmith` cookie sent with the response
+- [ ] Verify in Chrome that the `codesmith` cookie is being sent by starting your server and navigating to `localhost:3000/`. Open up the Chrome dev tools, go to the `Application` tab, and find the `codesmith` cookie in the Cookies section.
+- [ ] Inside of `cookieController.setCookie` middleware, create a cookie named 'secret' with a value that is a random number generated from 0-99 that should be sent to the server with all requests
+- [ ] Inside of `cookieController.setSSIDCookie`, create a cookie named 'ssid' with a value that is equal to the id of the user (mongoose creates an id for each user - you will need to implement a method to get the id of the user)
+- [ ] After a user successfully signs up or logs in, call the `cookieController.setSSIDCookie` function to add the `ssid` cookie to the response.
+- [ ] Follow best practices by making the `ssid` cookie HttpOnly. This means that client-side JavaScript cannot access your cookie, which greatly decreases the likelihood of it being stolen or manipulated by malicious JavaScript running on the client.
   - [Why use HttpOnly?](http://scottksmith.com/blog/2014/09/04/simple-steps-to-secure-your-express-node-application/)
 
 ### Sessions
-- [x] Create a session when a user creates an account. For now, each session will simply be a document in a Mongo database. A session has the following properties:
+- [ ] Create a session when a user creates an account. For now, each session will simply be a document in a Mongo database. A session has the following properties:
 ```
 cookieId: [String]
 ```
 The cookieId is equal the to the value of the cookie named `ssid` (which is equal to the user's id).
-- [x] Create a session when a user logins to an account
+- [ ] Create a session when a user logins to an account
 
 ### Blocking certain pages
-- [x] Modify the `sessionController.isLoggedIn` middleware to verify if a user has a cookie with the name "ssid" and it has an active session. If they do, they should be able to access the following page:
+- [ ] Modify the `sessionController.isLoggedIn` middleware to verify if a user has a cookie with the name "ssid" and it has an active session. If they do, they should be able to access the following page:
 ```
 http://localhost:3000/secret
 ```
-- [x] If they do not, they should be redirected to the signup page
+- [ ] If they do not, they should be redirected to the signup page
 ```
 http://localhost:3000/signup
 ```
   - Hint: Express doesn't parse cookies from the HTTP request by default. You'll need to add in that functionality somehow. Typically with express when we need to add in extra functionality, we do it with middleware.
 
-- [x] In `server/server.js`, modify the `/secret` express route so that the `sessionController.isLoggedIn` middleware verifies the session BEFORE allowing the secret page to be rendered.
+- [ ] In `server/server.js`, modify the `/secret` express route so that the `sessionController.isLoggedIn` middleware verifies the session BEFORE allowing the secret page to be rendered.
 
 ### Bcrypting passwords
 We are going to add a hook that will run before any passwords are saved that will bcrypt passwords before they are saved.
-- [x] Have it so that when a new user is created their password is then bcrypted before being saved to the database.
+- [ ] Have it so that when a new user is created their password is then bcrypted before being saved to the database.
   - Hint: To do this the right way, check out [Mongoose Middleware](http://mongoosejs.com/docs/middleware.html)
-- [x] When a user signs in, implement a method to compare their inputted password to the hashed password in the database
+- [ ] When a user signs in, implement a method to compare their inputted password to the hashed password in the database
 
 ### Extension
 **Note:** There are no tests in place for these challenges at this time. Read through them and choose the one that seems most interesting. You will likely not have enough time to do more than one!
