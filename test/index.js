@@ -181,7 +181,7 @@ describe('Unit 10 Tests', () => {
         .expect('set-cookie', /ssid=/, done);
     });
 
-    it('"ssid" cookie has value of user', (done) => {
+    it('"ssid" cookie has value equal to the id of the user', (done) => {
       const regex = new RegExp(id);
       request
         .post('/login')
