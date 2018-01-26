@@ -64,7 +64,7 @@ We will be working with EJS to generate static HTML pages.
 - [ ] Run `npm test` in your terminal to test your code
 - [ ] Additionally, you should be constantly testing out your code in the browser to assess its functionality.
 
-##Challenges
+## Challenges
 
 ### Creating users
 - [x] Add route to handle POST requests to `/signup`
