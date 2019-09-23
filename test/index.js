@@ -1,8 +1,8 @@
 const app = require('./../server/server');
 const request = require('supertest')(app);
 const expect = require('chai').expect;
-const Session = require('./../server/session/sessionModel');
-const User = require('./../server/user/userModel');
+const Session = require('./../server/models/sessionModel');
+const User = require('./../server/models/userModel');
 const bcrypt = require('bcryptjs');
 const sinon = require('sinon');
 
