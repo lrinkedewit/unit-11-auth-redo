@@ -4,9 +4,11 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
-const userController = require('./user/userController');
-const cookieController = require('./util/cookieController');
-const sessionController = require('./session/sessionController');
+const userController = require('./controllers/userController');
+const cookieController = require('./controllers/cookieController');
+const sessionController = require('./controllers/sessionController');
+
+const PORT = 3000;
 
 const app = express();
 
@@ -57,26 +59,50 @@ app.get('/signup', (req, res) => {
   res.render('./../client/signup', {error: null});
 });
 
-app.post('/signup', userController.createUser);
+app.post('/signup', userController.createUser , (req, res) => {
+  // what should happen here on successful sign up?
+
+});
 
 
 /**
 * login
 */
-app.post('/login', userController.verifyUser);
+app.post('/login', userController.verifyUser, (req, res) => {
+  // what should happen here on successful log in?
+
+});
 
 
 /**
 * Authorized routes
 */
-app.get('/secret', (req, res) => {
-  userController.getAllUsers((err, users) => {
-    if (err) throw err;
+app.get('/secret', userController.getAllUsers, (req, res) => {
 
-    res.render('./../client/secret', { users: users });
-  });
+  /**
+  * The previous middleware has populated `res.locals` with users
+  * which we will pass this in to the res.render so it can generate
+  * the proper html from the `secret.ejs` template
+  */
+  res.render('./../client/secret', { users: res.locals.users });
+
 });
 
-app.listen(3000);
+/**
+ * 404 handler
+ */
+app.use('*', (req,res) => {
+  res.status(404).send('Not Found');
+});
+
+/**
+ * Global error handler
+ */
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).send('Internal Server Error');
+});
+
+app.listen(PORT, ()=>{ console.log(`Listening on port ${PORT}...`); });
 
 module.exports = app;

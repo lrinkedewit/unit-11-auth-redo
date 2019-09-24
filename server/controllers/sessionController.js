@@ -5,21 +5,16 @@ const sessionController = {};
 /**
 * isLoggedIn - find the appropriate session for this request in the database, then
 * verify whether or not the session is still valid.
-*
-*
 */
-sessionController.isLoggedIn = (/* TODO: add parameters here */) => {
+sessionController.isLoggedIn = (req, res, next) => {
   // write code here
 
 };
 
 /**
-* startSession - create a new Session model and then save the new session to the
-* database.
-*
-*
+* startSession - create and save a new Session into the database.
 */
-sessionController.startSession = (/* TODO: add parameters here */) => {
+sessionController.startSession = (req, res, next) => {
   //write code here
 
 };

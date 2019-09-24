@@ -58,7 +58,7 @@ We will be working with EJS to generate static HTML pages.
 ### Setup
 - [ ] Run `npm install` to install server-side dependencies
 - [ ] Run `npm start` to start your server. Open your browser and head to `http://localhost:3000/`.
- - **Note:** You'll need to type your login password for the computer in order to start the server since the `npm start` command also starts a local **Mongo** database. This also means you'll need to setup [MongoDB](https://docs.mongodb.org/manual/installation/) before running this on your own machine. The Mac Minis already have MongoDB installed.
+ - **Note:** You may need to type your login password for the computer in order to start the server since the `npm start` command also starts a local **Mongo** database. This also means you'll need to setup [MongoDB](https://docs.mongodb.org/manual/installation/) before running this on your own machine.
 
 ### Testing
 - [ ] Run `npm test` in your terminal to test your code
@@ -68,7 +68,7 @@ We will be working with EJS to generate static HTML pages.
 
 ### Creating users
 - [x] Add route to handle POST requests to `/signup`
-- [ ] Modify the `userController.createUser` middleware in the `./server/user/userController.js` file to create a user from the client's request. Users require the following properties:
+- [ ] Modify the `userController.createUser` middleware in the `./server/controllers/userController.js` file to create a user from the client's request. Users require the following properties:
 ```
 {
   username: [String]
@@ -77,8 +77,8 @@ We will be working with EJS to generate static HTML pages.
 ```
 - [ ] If the POST request is successful, redirect to the `/secret` route
 - [ ] If the POST request is unsuccessful (i.e. your attempt to add a user to the database fails for some reason), render the error message that mongoose returns to the `/signup` page using `res.render`. Feel free to update the `signup.ejs` template to display the error message in a user-friendly way. Check out the [ejs docs](https://github.com/mde/ejs) for syntax examples.
-- [x] Add a route that handles POST requests to `/login`
-- [ ] Modify the `userController.verifyUser` middleware in the `./server/user/userController.js` file to check if a user exists and the password is correct
+- [ ] Add a route that handles POST requests to `/login`
+- [ ] Modify the `userController.verifyUser` middleware in the `./server/controllers/userController.js` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to `/signup`
 
 ### Create a cookie
