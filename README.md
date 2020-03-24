@@ -13,7 +13,7 @@ You will do that by creating cookies to send to the browser and sessions to veri
 - [ ] Understand the pros and cons of different session storage methods
 
 ### Cookies
-![](http://s.ravelrumba.com/uploads/2010/02/cookie-header-image1.png)
+![](./docs/assets/images/cookie-header.png)
 
 A cookie is a small amount of data that is stored in the browser. When a cookie is set in the browser, it is then automatically sent by the browser with every request to the server. That means the server can 'remember' the user's previous activity by inspecting the information stored in the cookie. Cookies allow websites to maintain state - that is, to persist information even as the page reloads. We'll use them here for maintaining a user's credentials.
 
@@ -23,17 +23,17 @@ Sessions are used to validate whether a user (with the proper cookies) should be
 ### Bcrypt
 It is not safe to assume that your data is impenetrable (by hackers, curious and/or disgruntled employees). Therefore it is essential not to store passwords (and other sensitive data) in plain text. If somebody gains access to your data, not only will they be able to login to your account for your site, but consumers also generally use the same password for many sites, and therefore the attacker will have access to those accounts as well. A standard way to ensure that information is not readily readable is by encrypting the data:
 
-![](https://i-msdn.sec.s-msft.com/dynimg/IC168364.gif)
+![](./docs/assets/images/bcrypt.gif)
 
 Typically in encryption, a special key is used to encrypt and decrypt the information. However, because the same key is used to encrypt and decrypt, an attacker who gains access to the key (or guesses it) will be able to decrypt all the passwords. Therefore when we store sensitive information on the server, a one-way encryption (cryptographic hash function) is used. This means that we can verify if a user's entered password is correct by passing it through our one-way encryption function and comparing it to the encrypted version on the server. Additionally, there is no way for us to obtain the user's real password from the encrypted version on the server.
 
-![](https://upload.wikimedia.org/wikipedia/commons/2/2b/Cryptographic_Hash_Function.svg)
+![](./docs/assets/images/bcrypt-hashing.svg)
 
 Now if an attacker was to gain access to your database they would just have a list of one-way encrypted passwords. We've improved our security, but it's still not enough. Attackers often utilize a list of the most common passwords, hash them with multiple hashing functions, and then compare their results to values in the database. If the attacker finds a match, they now know your cryptographic hash function. At this point the attacker can apply the same hash function to their list of common passwords and look for matches in your database. This is known as a **dictionary attack**. The attacker may also perform a **brute force** attack, simply trying to hash every combination of passwords up to a given length and then comparing the resulting hash to a hash (or many hashes) in your database.
 
 A way to speed up password cracking is to precompute the hashes of many passwords and store them in a table. Then the attacker can quickly run through their table of precomputed hashes and compare them to those in your database. This is known as a **lookup table**. A **rainbow table** is a type of lookup table that has been optimized to store **more** known hashes in the same amount of space, which results in it being more effective at finding passwords but slower to run.
 
-![](http://3.bp.blogspot.com/-MZXxu6K5kmw/UpYnwO89WEI/AAAAAAAAAAU/gjQza5sXz48/s1600/password_hashing.png)
+![](./docs/assets/images/password-hashing.png)
 
 Bcrypt was developed to reduce the effectiveness of rainbow tables. Before a user's password is encrypted a random string (known as a salt) is appended to the password. The string that is encrypted is no longer a common password since there is a random string of characters following it. In order for salting to be effective, a **random** salt must be used for every password - if the same salt was used for every password then a new lookup table could be created with the same salt appended to each password, making the salt pointless. Now when a user attempts to login, Bcrypt needs to know the specific salt that was used to encrypt their password so that it can hash the password + salt. Bcrypt achieves this by simply storing the salt in plain text along with the hashed password in the database. Storing the salt in plain text might seem like a security flaw, but remember that the point of a salt isn't to be secret, it's simply to make rainbow tables ineffective and reduce the effectiveness of brute force attacks somewhat.
 
@@ -42,7 +42,7 @@ Bcrypt was developed to reduce the effectiveness of rainbow tables. Before a use
 ### EJS
 We will also be working with [EJS](https://github.com/mde/ejs), an html templating library that creates web pages with variable content on the server end.
 
-![](http://www.michaelgallego.fr/images/posts/2012-11-26-client-side-1.png)
+![](./docs/assets/images/ejs.png)
 
 Unlike Single Page Applications (SPA) - where part of the pages is generated after the HTML file is rendered to the page via AJAX, the HTML (and DOM) is fully constructed on the server end. There are many templating libraries out there:
 
