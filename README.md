@@ -101,7 +101,7 @@ We will be working with EJS to generate static HTML pages.
 cookieId: [String]
 ```
 The cookieId is equal the to the value of the cookie named `ssid` (which is equal to the user's id).
-- [ ] Create a session when a user logins to an account
+- [ ] Create a session when a user logs in to an account
 
 ### Blocking certain pages
 - [ ] Modify the `sessionController.isLoggedIn` middleware to verify if a user has a cookie with the name "ssid" and it has an active session. If they do, they should be able to access the following page:
