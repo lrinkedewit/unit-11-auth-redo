@@ -59,7 +59,7 @@ We will be working with EJS to generate static HTML pages.
 - [ ] Run `npm install` to install server-side dependencies
 - [ ] The challenges and tests for this unit require a local MongoDB instance to be running. You should already have MongoDB installed from the database unit. Here are instructions to start a local instance:
   * Mac (installed via Homebrew): `brew services start mongodb-community` or see [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb)
-  * Ubuntu Linux: `sudo services mongod start` or see [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#run-mongodb-community-edition)
+  * Ubuntu Linux: `sudo service mongodb start` or see [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#run-mongodb-community-edition)
   * Windows: It should already be running if installed as Windows service. See [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#run-mdb-edition-as-a-windows-service)
   * To check whether you have a running MongoDB instance, type `mongo` in the terminal to launch the MongoDB Shell connecting to the database on 127.0.0.1(localhost):27017, which is also a good way to see what data you have in the database and also modify them. Checkout the docs for commands you can use [here](https://docs.mongodb.com/manual/mongo/#working-with-the-mongo-shell)
 - [ ] Run `npm start` (in a separate terminal tab or window if you have `mongo` running already) to start your server. Open your browser and head to `http://localhost:3000/`
