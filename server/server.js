@@ -50,8 +50,6 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', userController.createUser , (req, res) => {
   // what should happen here on successful sign up?
-  console.log(req.body)
-  res.send({ user: 'user'})
 
 });
 

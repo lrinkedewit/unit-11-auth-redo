@@ -5,10 +5,13 @@ const submit = document.querySelector('#submit');
 const newUserSignup = () => {
   fetch('/signup', {
     method: 'POST',
-    body: {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       username: username.value,
       password: password.value
-    }
+    })
   })
   .then((res) => res.json())
   .then((data) => {
