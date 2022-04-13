@@ -19,10 +19,8 @@
   "homepage": "https://github.com/CodesmithLLC/unit-11-authentication#readme",
   "dependencies": {
     "bcryptjs": "^2.3.0",
-    "body-parser": "^1.14.2",
     "chai": "^3.5.0",
     "cookie-parser": "^1.4.1",
-    "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "mocha": "^2.4.5",

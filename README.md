@@ -39,19 +39,6 @@ Bcrypt was developed to reduce the effectiveness of rainbow tables. Before a use
 
 [How to hash + salt the right way](https://crackstation.net/hashing-security.htm)
 
-### EJS
-We will also be working with [EJS](https://github.com/mde/ejs), an html templating library that creates web pages with variable content on the server end.
-
-![](./docs/assets/images/ejs.png)
-
-Unlike Single Page Applications (SPA) - where part of the pages is generated after the HTML file is rendered to the page via AJAX, the HTML (and DOM) is fully constructed on the server end. There are many templating libraries out there:
-
- - Jade
- - EJS
- - Handlebars
- - Mustache
-
-We will be working with EJS to generate static HTML pages.
 
 ## Getting started
 
@@ -80,7 +67,7 @@ We will be working with EJS to generate static HTML pages.
 }
 ```
 - [ ] If the POST request is successful, redirect to the `/secret` route
-- [ ] If the POST request is unsuccessful (i.e. your attempt to add a user to the database fails for some reason), render the error message that mongoose returns to the `/signup` page using `res.render`. Feel free to update the `signup.ejs` template to display the error message in a user-friendly way. Check out the [ejs docs](https://github.com/mde/ejs) for syntax examples.
+- [ ] If the POST request is unsuccessful (i.e. your attempt to add a user to the database fails for some reason), invoke the global error handler. In the client-side `signup.js` file, you'll see that there's logic to check for errors returned and, if so, display them on the page. Feel free to update the this logic to display the error message in a user-friendly way.
 - [ ] Add a route that handles POST requests to `/login`
 - [ ] Modify the `userController.verifyUser` middleware in the `./server/controllers/userController.js` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to `/signup`
@@ -116,6 +103,8 @@ http://localhost:3000/signup
 
 - [ ] In `server/server.js`, modify the `/secret` express route so that the `sessionController.isLoggedIn` middleware verifies the session BEFORE allowing the secret page to be rendered.
 
+- [ ] You'll see in `client/scripts/secret.js` that upon loading the secrets page, your browser will make a `fetch` request to the endpoint `/secrets/users`. In our `server.js` file, this endpoint is set up to invoke the `userController.getAllUsers` middleware and send all users and their passwords back to the client. Currently, there's nothing in our application that directs us to this endpoint without first going through the protected `/secrets` route. But what if an unverified hacker tried sending a request to this endpoint *without* going through our UI? You'll want to make sure that this isn't possible - remember, all protected routes should implement authorization!
+
 ### Bcrypting passwords
 We are going to add a hook that will run before any passwords are saved that will bcrypt passwords before they are saved.
 - [ ] Have it so that when a new user is created their password is then bcrypted before being saved to the database.
@@ -123,7 +112,7 @@ We are going to add a hook that will run before any passwords are saved that wil
 - [ ] When a user signs in, implement a method to compare their inputted password to the hashed password in the database
 
 ### Extension
-**Note:** There are no tests in place for these challenges at this time. Read through them and choose the one that seems most interesting. You will likely not have enough time to do more than one!
+**Note:** There are no tests in place for these challenges at this time. Read through them and choose the one that seems most interesting. You will likely not have enough time to do more than one, so we highly recommend starting with either the OAuth or JWT challenges!
 
 - [ ] Use a JSON Web Token stored inside our `ssid` cookie as your session store
   - Again, you'll probably want to make a new branch off of your master before starting this section.
