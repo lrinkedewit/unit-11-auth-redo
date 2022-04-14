@@ -13,18 +13,23 @@ const newUserSignup = () => {
       password: password.value
     })
   })
-  .then((res) => res.json())
+  .then((res) => {
+    if (res.type === String) res.json();
+  })
   .then((data) => {
-    if (data.error) {
+    if (data) {
       const errorMessage = document.createElement('div')
       errorMessage.appendChild(document.createTextNode(`Error: ${data.error}`));
       document.body.appendChild(errorMessage);
     }
-    else console.log('User created');
+    else {
+      console.log('User created');
+      window.location.assign('/secret');
+    }
   })
   .catch((err) => {
-    console.log('An error occurred:', err);
-  })
+    console.log('An error occurred', err);
+  });
 }
 
 submit.addEventListener('click', newUserSignup);

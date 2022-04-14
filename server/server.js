@@ -16,10 +16,11 @@ mongoose.connect(mongoURI);
 
 
 /**
-* Automatically parse urlencoded body content from incoming requests and place it
+* Automatically parse urlencoded body content and form data from incoming requests and place it
 * in req.body
 */
 app.use(express.json());
+app.use(express.urlencoded());
 
 app.use('/client', express.static(path.resolve(__dirname, '../client')));
 
@@ -37,7 +38,6 @@ app.use('/client', express.static(path.resolve(__dirname, '../client')));
 */
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
-
 });
 
 
