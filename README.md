@@ -103,7 +103,7 @@ http://localhost:3000/signup
 
 - [ ] In `server/server.js`, modify the `/secret` express route so that the `sessionController.isLoggedIn` middleware verifies the session BEFORE allowing the secret page to be rendered.
 
-- [ ] You'll see in `client/scripts/secret.js` that upon loading the secrets page, your browser will make a `fetch` request to the endpoint `/secrets/users`. In our `server.js` file, this endpoint is set up to invoke the `userController.getAllUsers` middleware and send all users and their passwords back to the client. Currently, there's nothing in our application that directs us to this endpoint without first going through the protected `/secrets` route. But what if an unverified hacker tried sending a request to this endpoint *without* going through our UI? You'll want to make sure that this isn't possible - remember, all protected routes should implement authorization!
+- [ ] You'll see in `client/scripts/secret.js` that upon loading the secret page, your browser will make a `fetch` request to the endpoint `/secret/users`. In our `server.js` file, this endpoint is set up to invoke the `userController.getAllUsers` middleware and send all users and their passwords back to the client. Currently, there's nothing in our application that directs us to this endpoint without first going through the protected `/secret` route. But what if an unverified hacker tried sending a request to this endpoint *without* going through our UI? You'll want to make sure that this isn't possible - remember, all protected routes should implement authorization!
 
 ### Bcrypting passwords
 We are going to add a hook that will run before any passwords are saved that will bcrypt passwords before they are saved.
