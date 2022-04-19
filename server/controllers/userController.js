@@ -23,7 +23,7 @@ userController.getAllUsers = (req, res, next) => {
 */
 userController.createUser = (req, res, next) => {
   // write code here
-
+  
 };
 
 /**

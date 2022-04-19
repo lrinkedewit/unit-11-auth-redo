@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
@@ -15,18 +14,15 @@ const app = express();
 const mongoURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost/unit11test' : 'mongodb://localhost/unit11dev';
 mongoose.connect(mongoURI);
 
-/**
-* Set our Express view engine as ejs.
-* This means whenever we call res.render, ejs will be used to compile the template.
-* ejs templates are located in the client/ directory
-*/
-app.set('view engine', 'ejs');
 
 /**
-* Automatically parse urlencoded body content from incoming requests and place it
+* Automatically parse urlencoded body content and form data from incoming requests and place it
 * in req.body
 */
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded());
+
+app.use('/client', express.static(path.resolve(__dirname, '../client')));
 
 
 /**
@@ -41,14 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 * root
 */
 app.get('/', (req, res) => {
-
-  /**
-  * Since we set `ejs` to be the view engine above, `res.render` will parse the
-  * template page we pass it (in this case 'client/secret.ejs') as ejs and produce
-  * a string of proper HTML which will be sent to the client!
-  */
-  res.render('./../client/index');
-
+  res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 
@@ -56,7 +45,7 @@ app.get('/', (req, res) => {
 * signup
 */
 app.get('/signup', (req, res) => {
-  res.render('./../client/signup', {error: null});
+  res.sendFile(path.resolve(__dirname, '../client/signup.html'));
 });
 
 app.post('/signup', userController.createUser , (req, res) => {
@@ -77,16 +66,13 @@ app.post('/login', userController.verifyUser, (req, res) => {
 /**
 * Authorized routes
 */
-app.get('/secret', userController.getAllUsers, (req, res) => {
-
-  /**
-  * The previous middleware has populated `res.locals` with users
-  * which we will pass this in to the res.render so it can generate
-  * the proper html from the `secret.ejs` template
-  */
-  res.render('./../client/secret', { users: res.locals.users });
-
+app.get('/secret', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/secret.html'));
 });
+
+app.get('/secret/users', userController.getAllUsers, (req, res) => {
+  res.send( { users: res.locals.users });
+})
 
 /**
  * 404 handler
@@ -100,7 +86,7 @@ app.use('*', (req,res) => {
  */
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500).send('Internal Server Error');
+  res.status(500).send({ error: err });
 });
 
 app.listen(PORT, ()=>{ console.log(`Listening on port ${PORT}...`); });
