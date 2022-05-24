@@ -5,10 +5,10 @@
 </head>
 <body>
   Signup
-  <input id="username" type="text" placeholder="username"></input>
-  <input id="password" type="password"></input>
-  <button id='submit'>Create User</button>
-
-  <script src="../client/scripts/signup.js"></script>
+  <form method='POST' action='/signup'>
+    <input name="username" type="text" placeholder="username"></input>
+    <input name="password" type="password"></input>
+    <input type="submit" value="create user"></input>
+  </form>
 </body>
 </html>
