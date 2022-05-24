@@ -67,7 +67,7 @@ Bcrypt was developed to reduce the effectiveness of rainbow tables. Before a use
 }
 ```
 - [ ] If the POST request is successful, redirect to the `/secret` route
-- [ ] If the POST request is unsuccessful (i.e. your attempt to add a user to the database fails for some reason), invoke the global error handler. In the client-side `signup.js` file, you'll see that there's logic to check for errors returned and, if so, display them on the page. Feel free to update the this logic to display the error message in a user-friendly way.
+- [ ] If the POST request is unsuccessful (i.e. your attempt to add a user to the database fails for some reason), invoke the global error handler.
 - [ ] Add a route that handles POST requests to `/login`
 - [ ] Modify the `userController.verifyUser` middleware in the `./server/controllers/userController.js` file to check if a user exists and the password is correct
 - [ ] If the username cannot be found or the password is incorrect, they should be redirected to `/signup`
