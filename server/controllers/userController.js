@@ -2,6 +2,13 @@ const User = require('../models/userModel');
 
 const userController = {};
 
+
+// {
+//   username: [String]
+//   password: [String]
+// }
+
+
 /**
 * getAllUsers - retrieve all users from the database and stores it into res.locals
 * before moving on to next middleware.
@@ -11,7 +18,7 @@ userController.getAllUsers = (req, res, next) => {
     // if a database error occurs, call next with the error message passed in
     // for the express global error handler to catch
     if (err) return next('Error in userController.getAllUsers: ' + JSON.stringify(err));
-    
+
     // store retrieved users into res.locals and move on to next middleware
     res.locals.users = users;
     return next();
@@ -23,7 +30,18 @@ userController.getAllUsers = (req, res, next) => {
 */
 userController.createUser = (req, res, next) => {
   // write code here
-  
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+    const credentials = {
+      username,
+      password
+    }
+    return next();
+  } catch (err) {
+    console.log('Error in userController.createUser', err);
+    return res.status(500).send(err.message)
+  }
 };
 
 /**

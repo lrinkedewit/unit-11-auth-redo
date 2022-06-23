@@ -11,73 +11,70 @@ const PORT = 3000;
 
 const app = express();
 
-const mongoURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost/unit11test' : 'mongodb://localhost/unit11dev';
+const mongoURI =
+  process.env.NODE_ENV === 'test'
+    ? 'mongodb://localhost/unit11test'
+    : 'mongodb://localhost/unit11dev';
 mongoose.connect(mongoURI);
 
-
 /**
-* Automatically parse urlencoded body content and form data from incoming requests and place it
-* in req.body
-*/
+ * Automatically parse urlencoded body content and form data from incoming requests and place it
+ * in req.body
+ */
 app.use(express.json());
 app.use(express.urlencoded());
 
 app.use('/client', express.static(path.resolve(__dirname, '../client')));
 
+/**
+ * --- Express Routes ---
+ * Express will attempt to match these routes in the order they are declared here.
+ * If a route handler / middleware handles a request and sends a response without
+ * calling `next()`, then none of the route handlers after that route will run!
+ * This can be very useful for adding authorization to certain routes...
+ */
 
 /**
-* --- Express Routes ---
-* Express will attempt to match these routes in the order they are declared here.
-* If a route handler / middleware handles a request and sends a response without
-* calling `next()`, then none of the route handlers after that route will run!
-* This can be very useful for adding authorization to certain routes...
-*/
-
-/**
-* root
-*/
+ * root
+ */
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
-
 /**
-* signup
-*/
+ * signup
+ */
 app.get('/signup', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/signup.html'));
 });
 
-app.post('/signup', userController.createUser , (req, res) => {
+app.post('/signup', userController.createUser, (req, res) => {
   // what should happen here on successful sign up?
-
+  res.status(200).redirect('/secret');
 });
 
-
 /**
-* login
-*/
+ * login
+ */
 app.post('/login', userController.verifyUser, (req, res) => {
   // what should happen here on successful log in?
-
 });
 
-
 /**
-* Authorized routes
-*/
+ * Authorized routes
+ */
 app.get('/secret', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/secret.html'));
 });
 
 app.get('/secret/users', userController.getAllUsers, (req, res) => {
-  res.send( { users: res.locals.users });
-})
+  res.send({ users: res.locals.users });
+});
 
 /**
  * 404 handler
  */
-app.use('*', (req,res) => {
+app.use('*', (req, res) => {
   res.status(404).send('Not Found');
 });
 
@@ -89,6 +86,8 @@ app.use((err, req, res, next) => {
   res.status(500).send({ error: err });
 });
 
-app.listen(PORT, ()=>{ console.log(`Listening on port ${PORT}...`); });
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}...`);
+});
 
 module.exports = app;
