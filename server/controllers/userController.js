@@ -31,13 +31,20 @@ userController.getAllUsers = (req, res, next) => {
 userController.createUser = (req, res, next) => {
   // write code here
   try {
-    const username = req.body.username;
-    const password = req.body.password;
-    const credentials = {
-      username,
-      password
+    const newuser = {
+      username: req.body.username,
+      password: req.body.password
     }
-    return next();
+    User.create((newuser), (err, user) => {
+      if (err) {
+        res.locals.error = err
+        return next();
+      }
+      res.locals.id = user.id;
+      res.locals.user = user;
+      return next();
+
+    })
   } catch (err) {
     console.log('Error in userController.createUser', err);
     return res.status(500).send(err.message)
@@ -51,6 +58,24 @@ userController.createUser = (req, res, next) => {
 */
 userController.verifyUser = (req, res, next) => {
   // write code here
+  try {
+    const finduser = {
+      username: req.body.username,
+      password: req.body.password
+    };
+    User.find(finduser, function (err, docs) {
+      if (!docs[0]) {
+        res.locals.error = 'The password for this user is incorrect!';
+        return next();
+      }
+      // if (docs)
+      console.log(docs)
+      return next()
+    })
+  } catch (err) {
+    console.log('Error in userController.verifyUser', err);
+    return res.status(500).send(err.message);
+  }
 
 };
 
