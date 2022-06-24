@@ -13,8 +13,8 @@ const app = express();
 
 const mongoURI =
   process.env.NODE_ENV === 'test'
-    ? 'mongodb://localhost/unit11test'
-    : 'mongodb://localhost/unit11dev';
+    ? 'mongodb://127.0.0.1:27017/unit11test'
+    : 'mongodb://127.0.0.1:27017/unit11dev';
 mongoose.connect(mongoURI);
 
 /**
@@ -57,7 +57,7 @@ app.post('/signup', userController.createUser, (req, res) => {
  * login
  */
 app.post('/login', userController.verifyUser, (req, res) => {
-  // what should happen here on successful log in?
+  res.status(200).redirect('/secret')
 });
 
 /**
@@ -82,7 +82,7 @@ app.use('*', (req, res) => {
  * Global error handler
  */
 app.use((err, req, res, next) => {
-  console.log(err);
+  console.log('This is an error from our global error handler', err);
   res.status(500).send({ error: err });
 });
 

@@ -37,13 +37,11 @@ userController.createUser = (req, res, next) => {
     }
     User.create((newuser), (err, user) => {
       if (err) {
-        res.locals.error = err
-        return next();
+        return next(err);
       }
       res.locals.id = user.id;
       res.locals.user = user;
       return next();
-
     })
   } catch (err) {
     console.log('Error in userController.createUser', err);
@@ -65,11 +63,11 @@ userController.verifyUser = (req, res, next) => {
     };
     User.find(finduser, function (err, docs) {
       if (!docs[0]) {
-        res.locals.error = 'The password for this user is incorrect!';
-        return next();
+        
+        // res.locals.error = 'The password for this user is incorrect!';
+        return res.redirect('/signup');
       }
       // if (docs)
-      console.log(docs)
       return next()
     })
   } catch (err) {

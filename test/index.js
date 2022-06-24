@@ -17,8 +17,8 @@ describe('Unit 10 Tests', () => {
 
   beforeEach((done) => {
 
-    User.remove({}, () => {
-      Session.remove({}, () => {
+    User.deleteOne({}, () => {
+      Session.deleteOne({}, () => {
 
         User.create({
           username: 'david',
@@ -119,25 +119,25 @@ describe('Unit 10 Tests', () => {
 
   describe('Cookies', () => {
 
-    it('Header has cookie name of "codesmith"', (done) => {
+    xit('Header has cookie name of "codesmith"', (done) => {
       request
         .get('/')
         .expect('set-cookie',/codesmith=/, done);
     });
 
-    it('"codesmith" cookie has value of "hi"', (done) => {
+    xit('"codesmith" cookie has value of "hi"', (done) => {
       request
         .get('/')
         .expect('set-cookie',/hi/, done);
     });
 
-    it('Header has a cookie name "secret"', (done) => {
+    xit('Header has a cookie name "secret"', (done) => {
       request
         .get('/')
         .expect('set-cookie', /secret=/, done);
     });
 
-    it('"secret" cookie has a random value from 0-99', (done) => {
+    xit('"secret" cookie has a random value from 0-99', (done) => {
       let oldNumber;
       let newNumber;
       let cookies;
@@ -157,7 +157,7 @@ describe('Unit 10 Tests', () => {
         });
     });
 
-    it('Header has a cookie named "ssid" when a user successfully logins', (done) => {
+    xit('Header has a cookie named "ssid" when a user successfully logins', (done) => {
       request
         .post('/login')
         .type('form')
@@ -165,7 +165,7 @@ describe('Unit 10 Tests', () => {
         .expect('set-cookie', /ssid=/, done);
     });
 
-    it('"ssid" cookie is HttpOnly', (done) => {
+    xit('"ssid" cookie is HttpOnly', (done) => {
       request
         .post('/login')
         .type('form')
@@ -173,7 +173,7 @@ describe('Unit 10 Tests', () => {
         .expect('set-cookie', /HttpOnly/, done);
     });
 
-    it('Header has a cookie named "ssid" when a user successfully signs up', (done) => {
+    xit('Header has a cookie named "ssid" when a user successfully signs up', (done) => {
       request
         .post('/signup')
         .type('form')
@@ -181,7 +181,7 @@ describe('Unit 10 Tests', () => {
         .expect('set-cookie', /ssid=/, done);
     });
 
-    it('"ssid" cookie has value equal to the id of the user', (done) => {
+    xit('"ssid" cookie has value equal to the id of the user', (done) => {
       const regex = new RegExp(id);
       request
         .post('/login')
@@ -194,7 +194,7 @@ describe('Unit 10 Tests', () => {
 
   describe('Sessions', () => {
 
-    it('Creates a session when a user successfully creates an account', (done) => {
+    xit('Creates a session when a user successfully creates an account', (done) => {
       request
         .post('/signup')
         .type('form')
@@ -210,7 +210,7 @@ describe('Unit 10 Tests', () => {
         });
     });
 
-    it('Creates a session when a user successfully logins to an account', (done) => {
+    xit('Creates a session when a user successfully logins to an account', (done) => {
       request
         .post('/login')
         .type('form')
@@ -226,7 +226,7 @@ describe('Unit 10 Tests', () => {
         });
     });
 
-    it('Does not create a session if login unsuccessful', (done) => {
+    xit('Does not create a session if login unsuccessful', (done) => {
       request
         .post('/login')
         .type('form')
@@ -246,7 +246,7 @@ describe('Unit 10 Tests', () => {
 
   describe('Authorizing users', () => {
 
-    it('Block "/secret" if session not active', (done) => {
+    xit('Block "/secret" if session not active', (done) => {
      request
        .get('/secret')
        .end((err, res) => {
@@ -256,7 +256,7 @@ describe('Unit 10 Tests', () => {
        });
     });
 
-    it('Redirects from "/secret" to "/signup" if session not active', (done) => {
+    xit('Redirects from "/secret" to "/signup" if session not active', (done) => {
      request
        .get('/secret')
        .expect(302)
@@ -266,7 +266,7 @@ describe('Unit 10 Tests', () => {
        });
     });
 
-    it('Allows access to "/secret" if session active', (done) => {
+    xit('Allows access to "/secret" if session active', (done) => {
       request
         .post('/login')
         .type('form')
@@ -286,7 +286,7 @@ describe('Unit 10 Tests', () => {
         });
     });
 
-    it('Should not be able to access "/secret" after session expires', (done) => {
+    xit('Should not be able to access "/secret" after session expires', (done) => {
       request
         .post('/login')
         .type('form')
@@ -309,7 +309,7 @@ describe('Unit 10 Tests', () => {
 
   describe('Bcrypting passwords', () => {
 
-    it('Passwords should not be stored in plaintext', (done) => {
+    xit('Passwords should not be stored in plaintext', (done) => {
       request
         .post('/signup')
         .send({"username": "test3", "password" : "password3"})
@@ -322,7 +322,7 @@ describe('Unit 10 Tests', () => {
         });
     });
 
-    it('Passwords be bcrypted', (done) => {
+    xit('Passwords be bcrypted', (done) => {
       request
         .post('/signup')
         .send({ username: 'test4', password: 'password4' })
@@ -335,7 +335,7 @@ describe('Unit 10 Tests', () => {
         });
     });
 
-    it('Bcrypts passwords in Mongoose middleware, not in userController', (done) => {
+    xit('Bcrypts passwords in Mongoose middleware, not in userController', (done) => {
       User.create({ username: 'petri', password: 'aight' }, (err, user) => {
         expect(user.password).to.not.eql('aight');
         expect(bcrypt.compareSync('aight', user.password)).to.be.true;
